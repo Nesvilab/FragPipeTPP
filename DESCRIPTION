@@ -1,0 +1,25 @@
+Package: FragPipeToTPPR
+Title: From FragPipe Ouput to TPPR Input
+Version: 0.0.1
+Authors@R: 
+    person("Carolina", "Rojas Ramirez", , "crojaram@umich.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "000-0002-2085-0577"))
+Description: Enables FragPipe Ouput from (TPP workflow) to be made compatible with TPP-R package
+License: `use_gpl3_license()` 
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+    bit64,
+    data.table,
+    dplyr,
+    TPP,
+    utils,
+    xlsx
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

@@ -1,0 +1,4 @@
+^renv$
+^renv\.lock$
+^FragPipeToTPPR\.Rproj$
+^\.Rproj\.user$
