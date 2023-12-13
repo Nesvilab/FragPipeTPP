@@ -108,7 +108,7 @@ knitr::include_graphics(FragPipeToTPPR::dummytpmappic)
 ```
 
 ### From FragPipe to TPP-R: 1DTPP
-Complete steps 1 - 4 from the **From FragPipe to TP-MAP** section. In step 5 instead of running tpprNormOneDTPP(configpath,FPpath), the full TPPR workflow function will be used. remember to use the correct configutation file path and to pass the function a directory to dave ther esults (in this case 1DTPP-TPPR folder):
+Complete steps 1 - 4 from the **From FragPipe to TP-MAP** section. In step 5 instead of running tpprNormOneDTPP(configpath,FPpath), the full TPPR workflow function will be used. remember to use the correct configutation file path and to pass the function a directory to save the results (in this case 1DTPP-TPPR folder):
 
 ```{r From TPP-R to TP-MAP}
 TPPRfolder <- file.path(FPpath, "1DTPP-TPPR")
