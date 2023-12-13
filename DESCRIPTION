@@ -13,7 +13,6 @@ Imports:
     bit64,
     data.table,
     dplyr,
-    TPP,
     utils,
     xlsx
 Depends: 
