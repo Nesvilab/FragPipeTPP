@@ -37,10 +37,12 @@ In RStudio Console:
 
 ##### 1. Make sure both renv (making sure all needed packages are installed) and devtools are install. If not run:
 install.package("devtools")
+
 install.package("renv")
 
 ##### 2. Load packages
 library("devtools")
+
 library("renv")
 
 
