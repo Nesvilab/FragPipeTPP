@@ -56,6 +56,7 @@ library(FragPipeToTPPR)
 
 ##### 5. Set working directory to the package directory (only for initial installation and following the Vignette).
 packagepath <- system.file(package = 'FragPipeToTPPR')
+
 setwd(packagepath)
 
 ##### 6. Initialize renv package
