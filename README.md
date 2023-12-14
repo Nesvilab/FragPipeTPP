@@ -35,18 +35,34 @@ To analyze 1DTPP data produced by FragPipe, output files can be converted to inp
 
 In RStudio Console:
 
-##### 1. Install of renv (virtual environment that will take care of most of the packages needed by FragPipeToTPPR
+##### 1. Make sure both renv (making sure all needed packages are installed) and devtools are install. If not run:
+install.package("devtools")
 install.package("renv")
 
-##### 2. Initialize renv
+##### 2. Load packages
+library("devtools")
+library("renv")
+
+
+##### 3. Install FragPipeTPPR package
+install_github("Nesvilab/FragPipeToTPPR)
+
+* DONE (FragPipeToTPPR) means success!
+
+##### 4. Load FragPipeTPPR
+library(FragPipeToTPPR)
+
+##### 5. Set working directory to the package directory (only for initial installation and following the Vignette).
+packagepath <- system.file(package = 'FragPipeToTPPR')
+setwd(packagepath)
+
+##### 6. Initialize renv package
 renv::init()
 
-##### 3. Install TPP-R from Bioconductor
-renv::install("bioc::TPP_sth")
+A promp will appeared at some point: "This project already has a lockfile. What would you like to do?" Choose option 1: Restore the project from the lockfile.
+Now all the package needed by FragPipeToTPPR will be installed.
 
-##### 4. Install FragPipeTPPR
-renv::install("Nesvilab/FragPipeToTPPR")
-
+**The Package is ready to use!**
 
 There are three functions to use:
 
