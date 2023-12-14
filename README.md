@@ -62,7 +62,7 @@ setwd(packagepath)
 renv::init()
 
 A promp will appeared at some point: "This project already has a lockfile. What would you like to do?" Choose option 1: Restore the project from the lockfile.
-Now all the package needed by FragPipeToTPPR will be installed.
+Now all the packages needed by FragPipeToTPPR will be installed.
 
 **The Package is ready to use!**
 
