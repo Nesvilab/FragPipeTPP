@@ -36,9 +36,9 @@ To analyze 1DTPP data produced by FragPipe, output files can be converted to inp
 In RStudio Console:
 
 ##### 1. Make sure both renv (making sure all needed packages are installed) and devtools are install. If not run:
-install.package("devtools")
+install.packages("devtools")
 
-install.package("renv")
+install.packages("renv")
 
 ##### 2. Load packages
 library("devtools")
@@ -47,7 +47,7 @@ library("renv")
 
 
 ##### 3. Install FragPipeTPPR package
-install_github("Nesvilab/FragPipeToTPPR)
+install_github("Nesvilab/FragPipeToTPPR")
 
 * DONE (FragPipeToTPPR) means success!
 
@@ -69,7 +69,7 @@ Now all the packages needed by FragPipeToTPPR will be installed.
 
 There are three functions to use:
 
-- **tmitotppr** (FragPipe to TPP-R)
+- **tmtitotppr** (FragPipe to TPP-R)
 
 - **tpprNormOneDTPP** (TPPR all melting curve normalization only - required to input 1DTPP data into TP-MAP)
 
