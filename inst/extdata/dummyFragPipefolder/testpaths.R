@@ -2,11 +2,11 @@
 # Path pointg to a dummyFragPipeFolder to test that the package is working
 
 
-dummyFragPipepath <- "extdata/dummyFragPipeFolder"
-dummyhumandatabse <- "dummyFragPipeFolder/2023-07-12-UP000005640_dummy.fas"
+dummyFragPipepath <- "inst/extdata/dummyFragPipeFolder"
+dummyhumandatabse <- "inst/extdata/dummyFragPipeFolder/2023-07-12-UP000005640_dummy.fas"
 dummyexplabels <- c("Treatment", "Vehicle")
-dummyconfigpath <- "extdata/dummyFragPipeFolder/1DTPP-TPPR/TPP-TR_config.csv"
-dummytpmappic <- "extdata/dummyFragPipeFolder/TP-MAP_results.PNG"
+dummyconfigpath <- "inst/extdata/dummyFragPipeFolder/1DTPP-TPPR/TPP-TR_config.csv"
+dummytpmappic <- "inst/extdata/dummyFragPipeFolder/TP-MAPresults.PNG"
 
 # This should be the last line.
 # Note that names are unquoted.

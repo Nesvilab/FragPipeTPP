@@ -2,3 +2,5 @@
 ^renv\.lock$
 ^FragPipeToTPPR\.Rproj$
 ^\.Rproj\.user$
+^doc$
+^Meta$

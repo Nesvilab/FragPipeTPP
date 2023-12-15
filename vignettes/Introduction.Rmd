@@ -63,15 +63,17 @@ Below we will go through two different workflows where the functions above will 
 2. Once the FragPipe run has completed and you are ready to use TPP-R, start an R session:
 
 ```{r setup}
-library(FragPipeToTPPR)
+library(FragPipeToTPPR, TPP)
 ```
 
 3. Create two variables: the path to your FragPipe output folder and a vector with the desired labels used in your experiment.
 
- 
-Path to FragPipe Output Folder (For this test we are using a simplified FragPipe output folder located inside the package: dummyFragPipepath).
 ```{r Path to local Frag Pipe folder}
-FPpath<- FragPipeToTPPR::dummyFragPipepath
+FPpath <- FragPipeToTPPR::dummyFragPipepath
+```
+
+```{r FragPipePath for building , include=FALSE}
+FPpath<- "C:/Users/crojaram/Documents/FragPipeToTPPR/inst/extdata/dummyFragPipeFolder"
 ```
 
 Labels used in experiment e.g. Vehicle vs Treatment, Control vs Sample.
@@ -82,30 +84,37 @@ explabels <- FragPipeToTPPR::dummyexplabels
 4. Convert FragPipe output (from TMT-I tmt-report/ratio_protein_None.tsv) to TPP-R input (1DTPP analysis only). The function tmtitotppr takes two variables: FragPipe output folder and experimental variables (the ones we created in the step 1).I t will ouput the headers to be changed and the before and after header values. This function will only return the path to the configuration files created by the fucntion ( a file needed by TPP-R to connect input files TMT labels with temperatures.)
 
 ```{r TMT-Integrator (in FragPipe) ouput to TPP-R input}
-configpath <- tmtitotppr(FPpath, explabels)
+configpath <- FragPipeToTPPR::tmtitotppr(FPpath, explabels)
 ```
 
+```{r ConfigPath for building , include=FALSE}
+configpath <- "C:/Users/crojaram/Documents/FragPipeToTPPR/inst/extdata/dummyFragPipeFolder/1DTPP-TPPR/TPP-TR_config.csv"
+```
   The results are now saved in the newly created folder 1DTPP-TPPR. If you explore inside the new folder, not only the configuration file will be present, but also .txt files compatible with TPP-R for each replicate and experiment.
 ```{r Check path of previous output} 
 print(configpath)
 ```
 
 5. We will now perform a general normalization procedure for all melting curves (add link to function in TPP-R and link to original paper) This function takes the normalization function from TPP-R and outputs the data ready for conversion into TP-MAP input file. Notice the new .csv files inside the 1DTPP-TPPR folder?
-```{r Mleting Curve Normalization}
-tpprNormOneDTPP(configpath,FPpath)
+
+```{r Database for building , include=FALSE}
+hoomandb <- "C:/Users/crojaram/Documents/FragPipeToTPPR/inst/extdata/dummyFragPipeFolder/2023-07-12-UP000005640_dummy.fas"
+```
+
+```{r Melting Curve Normalization}
+FragPipeToTPPR::tpprNormOneDTPP(configpath,FPpath)
 ```
 
 6. Finally the .csv files created in the last steps will be merged into one .tpmap.txt file along with a description string for each protein. This description information is needed for protein-protein interactions analysis in TP-MAP. First create the database variable and then run tpprTotpmap. 
 ```{r TPP-R to TP-MAP}
-hoomandb <- FragPipeToTPPR::dummyhumandatabse
-tpprTotpmap(configpath,hoomandb)
+
+FragPipeToTPPR::tpprTotpmap(configpath,hoomandb)
 ```
 
 The tptmap.txt file (located in the 1DTPP-TTPR folder) can now be loaded in TP-MAP. Below is how the melting curve for protein A0AVT1 looks like:
 
-```{r echo=FALSE,out.width="10%", fig.align="center"}
-knitr::include_graphics(FragPipeToTPPR::dummytpmappic)
-```
+![](TP-MAPresults.PNG){width=60%}
+
 
 ### From FragPipe to TPP-R: 1DTPP
 Complete steps 1 - 4 from the **From FragPipe to TP-MAP** section. In step 5 instead of running tpprNormOneDTPP(configpath,FPpath), the full TPPR workflow function will be used. remember to use the correct configutation file path and to pass the function a directory to save the results (in this case 1DTPP-TPPR folder):
