@@ -75,4 +75,4 @@ There are three functions to use:
 
 - **tpprTotpmap** (from TPP-R normalized FragPipe data to TP-MAP input file)
 
-For information and code testing go to the included R-Vignette in the package.
+## For information and to see sample code results use browseVignettes("FragPipeToTPPR") in the RStudio Console.
