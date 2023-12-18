@@ -36,9 +36,9 @@ To analyze 1DTPP data produced by FragPipe, output files can be converted to inp
 In RStudio Console:
 
 ##### 1. Make sure both renv (making sure all needed packages are installed) and devtools are install. If not run:
-install.package("devtools")
+install.packages("devtools")
 
-install.package("renv")
+install.packages("renv")
 
 ##### 2. Load packages
 library("devtools")
