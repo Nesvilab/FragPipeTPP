@@ -49,6 +49,8 @@ library("renv")
 
 renv::install("Nesvilab/FragPipeToTPPR")
 
+Below is a successful package installation:
+
 ###### Downloading packages -------------------------------------------------------
 - Downloading FragPipeToTPPR from GitHub ...    OK [427.5 Kb in 0.67s]
 Successfully downloaded 1 package in 1.1 seconds.
@@ -82,7 +84,7 @@ Which files should renv use for dependency discovery in this project?
   Choose option 1: Restore the project from the lockfile.
   
 Now all the packages needed by FragPipeToTPPR will be installed.
-###### Note: Some packages might failed (it is user's local machine configuration dependent). It in the developing testing, "cli" pacakge failed to isntall but FragPipeToTPPR ran fine.
+###### Note: Some packages might failed (it is user's local machine configuration dependent). It in the developing testing, "cli" pacakge failed to install but FragPipeToTPPR ran fine.
 
 **The Package is ready to use!**
 
