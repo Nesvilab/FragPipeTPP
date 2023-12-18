@@ -45,11 +45,13 @@ If succesfull a message will appeared saying: "The downloaded binary packages ar
 
 library("renv")
 
-##### 3. Install FragPipeTPPR package
+##### 3. Install TPP and FragPipeTPPR packages
+
+renv::install("bioc::TPP")
 
 renv::install("Nesvilab/FragPipeToTPPR")
 
-Below is a successful package installation:
+Below is a successful FragPipeToTPPR package installation:
 
 ###### Downloading packages -------------------------------------------------------
 - Downloading FragPipeToTPPR from GitHub ...    OK [427.5 Kb in 0.67s]
