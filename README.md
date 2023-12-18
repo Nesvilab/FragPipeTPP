@@ -35,26 +35,40 @@ To analyze 1DTPP data produced by FragPipe, output files can be converted to inp
 
 In RStudio Console:
 
-##### 1. Make sure both renv (making sure all needed packages are installed) and devtools are install. If not run:
-install.packages("devtools")
+##### 1. Make sure renv package is installed. This package makes sure all needed packages are installed. To install run: 
 
 install.packages("renv")
 
-##### 2. Load packages
-library("devtools")
+If succesfull a message will appeared saying: "The downloaded binary packages are in", and it will indicate a path in the user's local machine.
+
+##### 2. Load package
 
 library("renv")
 
-
 ##### 3. Install FragPipeTPPR package
-install_github("Nesvilab/FragPipeToTPPR)
 
-* DONE (FragPipeToTPPR) means success!
+renv::install("Nesvilab/FragPipeToTPPR")
+
+Below is a successful package installation:
+
+###### Downloading packages -------------------------------------------------------
+- Downloading FragPipeToTPPR from GitHub ...    OK [427.5 Kb in 0.67s]
+Successfully downloaded 1 package in 1.1 seconds.
+
+The following package(s) will be installed:
+- FragPipeToTPPR [Nesvilab/FragPipeToTPPR@main]
+These packages will be installed into "C:/Users/caror/AppData/Local/R/win-library/4.3".
+
+Do you want to proceed? [Y/n]: Y
+
+###### Installing packages --------------------------------------------------------
+- Installing FragPipeToTPPR ...                 OK [built from source and cached in 2.1s]
+Successfully installed 1 package in 2.4 seconds.
 
 ##### 4. Load FragPipeTPPR
 library(FragPipeToTPPR)
 
-##### 5. Set working directory to the package directory (only for initial installation and following the Vignette).
+##### 5. Set working directory to the package directory (only for initial installation).
 packagepath <- system.file(package = 'FragPipeToTPPR')
 
 setwd(packagepath)
@@ -62,8 +76,15 @@ setwd(packagepath)
 ##### 6. Initialize renv package
 renv::init()
 
-A promp will appeared at some point: "This project already has a lockfile. What would you like to do?" Choose option 1: Restore the project from the lockfile.
+Promps will appeared at some point: 
+- This project contains a DESCRIPTION file.
+Which files should renv use for dependency discovery in this project?
+  Choose 2: Use all files in this project. (implicit mode)
+- "This project already has a lockfile. What would you like to do?"
+  Choose option 1: Restore the project from the lockfile.
+  
 Now all the packages needed by FragPipeToTPPR will be installed.
+###### Note: Some packages might failed (it is user's local machine configuration dependent). It in the developing testing, "cli" pacakge failed to install but FragPipeToTPPR ran fine.
 
 **The Package is ready to use!**
 
@@ -74,5 +95,7 @@ There are three functions to use:
 - **tpprNormOneDTPP** (TPPR all melting curve normalization only - required to input 1DTPP data into TP-MAP)
 
 - **tpprTotpmap** (from TPP-R normalized FragPipe data to TP-MAP input file)
+
+##### 7. Change working directory to desired one.
 
 ## For information and to see sample code results use browseVignettes("FragPipeToTPPR") in the RStudio Console.
