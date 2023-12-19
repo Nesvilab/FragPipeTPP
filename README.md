@@ -77,6 +77,4 @@ There are three functions to use:
 
 - **tpprTotpmap** (from TPP-R normalized FragPipe data to TP-MAP input file)
 
-##### 7. Change working directory to desired one.
-
 ## For information and to see sample code results use browseVignettes("FragPipeToTPPR") in the RStudio Console.
