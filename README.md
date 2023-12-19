@@ -41,11 +41,7 @@ install.packages("renv")
 
 If succesfull a message will appeared saying: "The downloaded binary packages are in", and it will indicate a path in the user's local machine.
 
-##### 2. Load package
-
-library("renv")
-
-##### 3. Install TPP and FragPipeTPPR packages
+##### 2. Install TPP and FragPipeTPPR packages
 
 renv::install("bioc::TPP")
 
@@ -67,26 +63,9 @@ Do you want to proceed? [Y/n]: Y
 - Installing FragPipeToTPPR ...                 OK [built from source and cached in 2.1s]
 Successfully installed 1 package in 2.4 seconds.
 
-##### 4. Load FragPipeTPPR
+##### 3. Load FragPipeTPPR
 library(FragPipeToTPPR)
 
-##### 5. Set working directory to the package directory (only for initial installation).
-packagepath <- system.file(package = 'FragPipeToTPPR')
-
-setwd(packagepath)
-
-##### 6. Initialize renv package
-renv::init()
-
-Promps will appeared at some point: 
-- This project contains a DESCRIPTION file.
-Which files should renv use for dependency discovery in this project?
-  Choose 2: Use all files in this project. (implicit mode)
-- "This project already has a lockfile. What would you like to do?"
-  Choose option 1: Restore the project from the lockfile.
-  
-Now all the packages needed by FragPipeToTPPR will be installed.
-###### Note: Some packages might failed (it is user's local machine configuration dependent). It in the developing testing, "cli" pacakge failed to install but FragPipeToTPPR ran fine.
 
 **The Package is ready to use!**
 
