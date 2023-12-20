@@ -35,17 +35,29 @@ To analyze 1DTPP data produced by FragPipe, output files can be converted to inp
 
 In RStudio Console:
 
-##### 1. Make sure renv package is installed. This package makes sure all needed packages are installed. To install run: 
+### 1. Make sure renv package is installed. This package makes sure all needed packages are installed. To install run: 
 
-install.packages("renv")
+#### install.packages("renv")
 
 If succesfull a message will appeared saying: "The downloaded binary packages are in", and it will indicate a path in the user's local machine.
 
-##### 2. Install TPP and FragPipeTPPR packages
+### 2. Install TPP and FragPipeTPPR packages
 
-renv::install("bioc::TPP")
+#### renv::install("bioc::TPP")
 
-renv::install("Nesvilab/FragPipeToTPPR")
+Below is a successful FragPipeToTPPR package installation:
+
+The following package(s) will be installed:
+- TPP [3.28.0]
+These packages will be installed into "C:/Users/caror/AppData/Local/R/win-library/4.3".
+
+Do you want to proceed? [Y/n]: Y
+
+##### Installing packages --------------------------------------------------------
+- Installing TPP ...                            OK [copied from cache in 0.37s]
+Successfully installed 1 package in 0.39 seconds.
+
+#### renv::install("Nesvilab/FragPipeToTPPR")
 
 Below is a successful FragPipeToTPPR package installation:
 
@@ -63,8 +75,10 @@ Do you want to proceed? [Y/n]: Y
 - Installing FragPipeToTPPR ...                 OK [built from source and cached in 2.1s]
 Successfully installed 1 package in 2.4 seconds.
 
-##### 3. Load FragPipeTPPR
-library(FragPipeToTPPR)
+### 3. Load FragPipeTPPR
+
+#### library(FragPipeToTPPR)
+
 
 
 **The Package is ready to use!**
