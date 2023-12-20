@@ -443,10 +443,10 @@ Sample.</p>
 <li>Convert FragPipe output (from TMT-I
 tmt-report/ratio_protein_None.tsv) to TPP-R input (1DTPP analysis only).
 The function tmtitotppr takes two variables: FragPipe output folder and
-experimental variables (the ones we created in the step 1).I t will
-ouput the headers to be changed and the before and after header values.
+experimental variables (the ones we created in the step 1).It will
+output the headers to be changed and the before and after header values.
 This function will only return the path to the configuration files
-created by the fucntion ( a file needed by TPP-R to connect input files
+created by the function (a file needed by TPP-R to connect input files
 TMT labels with temperatures.)</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>configpath <span class="ot">&lt;-</span> FragPipeToTPPR<span class="sc">::</span><span class="fu">tmtitotppr</span>(FPpath, explabels)</span>
@@ -741,7 +741,9 @@ TMT labels with temperatures.)</li>
 <p>The results are now saved in the newly created folder 1DTPP-TPPR. If
 you explore inside the new folder, not only the configuration file will
 be present, but also .txt files compatible with TPP-R for each replicate
-and experiment.</p>
+and experiment. (<strong>Note: The path below is a sample. When you
+explore YOUR FragPipe output folder you will find a 1DTPP-TPPR
+folder</strong>)</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">print</span>(configpath)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;C:/Users/crojaram/Documents/FragPipeToTPPR/inst/extdata/dummyFragPipeFolder/1DTPP-TPPR/TPP-TR_config.csv&quot;</span></span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
@@ -953,7 +955,7 @@ folder):</p>
 <span id="cb8-86"><a href="#cb8-86" tabindex="-1"></a><span class="co">#&gt; Normalizing all proteins in all experiments.</span></span>
 <span id="cb8-87"><a href="#cb8-87" tabindex="-1"></a><span class="co">#&gt; Normalization successfully completed!</span></span>
 <span id="cb8-88"><a href="#cb8-88" tabindex="-1"></a><span class="co">#&gt; Fitting melting curves to 4 proteins.</span></span>
-<span id="cb8-89"><a href="#cb8-89" tabindex="-1"></a><span class="co">#&gt; Runtime (12 CPUs used): 7.14 secs</span></span>
+<span id="cb8-89"><a href="#cb8-89" tabindex="-1"></a><span class="co">#&gt; Runtime (12 CPUs used): 5.81 secs</span></span>
 <span id="cb8-90"><a href="#cb8-90" tabindex="-1"></a><span class="co">#&gt; Melting curves fitted sucessfully!</span></span>
 <span id="cb8-91"><a href="#cb8-91" tabindex="-1"></a><span class="co">#&gt; 13 out of 13 models with sufficient data points converged (100 %).</span></span>
 <span id="cb8-92"><a href="#cb8-92" tabindex="-1"></a><span class="co">#&gt; Starting melting curve analysis.</span></span>
