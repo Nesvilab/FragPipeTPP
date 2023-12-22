@@ -138,7 +138,7 @@ tmtitotppr <- function(fragpipefolder, experimentlables){
         print(class(newdataframe))
         #print(newdataframe$"Index")
         #Normalization to lowest temperature (first two columns are protein id and qssm filtering criteria)
-        newdataframe[, c(3,ncol(newdataframe))] <-  newdataframe[, c(3,ncol(newdataframe))] / newdataframe[,3]
+        newdataframe[, 3:ncol(newdataframe)] <-   newdataframe[, 3:ncol(newdataframe)] / newdataframe[,3]
 
         #print(newdataframe[, -1])
 
