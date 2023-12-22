@@ -15,7 +15,8 @@ Imports:
     data.table,
     dplyr,
     utils,
-    xlsx
+    xlsx,
+    tidyft
 Depends: 
     R (>= 2.10)
 LazyData: true
