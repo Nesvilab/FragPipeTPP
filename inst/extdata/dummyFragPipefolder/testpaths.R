@@ -3,7 +3,7 @@
 
 
 dummyFragPipepath <- "inst/extdata/dummyFragPipeFolder"
-dummyhumandatabse <- "inst/extdata/dummyFragPipeFolder/2023-07-12-UP000005640_dummy.fas"
+dummyhumandatabse <- "inst/extdata/dummyFragPipeFolder/2023-07-12-decoys-reviewed-contam-UP000005640.fas"
 dummyexplabels <- c("Treatment", "Vehicle")
 dummyconfigpath <- "inst/extdata/dummyFragPipeFolder/1DTPP-TPPR/TPP-TR_config.csv"
 dummytpmappic <- "inst/extdata/dummyFragPipeFolder/TP-MAPresults.PNG"

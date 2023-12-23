@@ -27,7 +27,7 @@ configpath <- "C:/Users/crojaram/Documents/FragPipeToTPPR/inst/extdata/dummyFrag
 print(configpath)
 
 ## ----Database for building , include=FALSE------------------------------------
-hoomandb <- "C:/Users/crojaram/Documents/FragPipeToTPPR/inst/extdata/dummyFragPipeFolder/2023-07-12-UP000005640_dummy.fas"
+hoomandb <- "C:/Users/crojaram/Documents/FragPipeToTPPR/inst/extdata/dummyFragPipeFolder/2023-07-12-decoys-reviewed-contam-UP000005640.fas"
 
 ## ----Melting Curve Normalization----------------------------------------------
 FragPipeToTPPR::tpprNormOneDTPP(configpath,FPpath)
@@ -35,9 +35,4 @@ FragPipeToTPPR::tpprNormOneDTPP(configpath,FPpath)
 ## ----TPP-R to TP-MAP----------------------------------------------------------
 
 FragPipeToTPPR::tpprTotpmap(configpath,hoomandb)
-
-## ----From TPP-R to TP-MAP-----------------------------------------------------
-TPPRfolder <- file.path(FPpath, "1DTPP-TPPR")
-TPPTR_result <- TPP::analyzeTPPTR(configpath,resultPath = TPPRfolder , methods = "meltcurvefit",idVar= "Prot_ID",qualColName="qssm")
-
 

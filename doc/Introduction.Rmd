@@ -98,7 +98,7 @@ print(configpath)
 5. We will now perform a general normalization procedure for all melting curves (add link to function in TPP-R and link to original paper) This function takes the normalization function from TPP-R and outputs the data ready for conversion into TP-MAP input file. Notice the new .csv files inside the 1DTPP-TPPR folder?
 
 ```{r Database for building , include=FALSE}
-hoomandb <- "C:/Users/crojaram/Documents/FragPipeToTPPR/inst/extdata/dummyFragPipeFolder/2023-07-12-UP000005640_dummy.fas"
+hoomandb <- "C:/Users/crojaram/Documents/FragPipeToTPPR/inst/extdata/dummyFragPipeFolder/2023-07-12-decoys-reviewed-contam-UP000005640.fas"
 ```
 
 ```{r Melting Curve Normalization}
@@ -117,11 +117,12 @@ The tptmap.txt file (located in the 1DTPP-TTPR folder) can now be loaded in TP-M
 
 
 ### From FragPipe to TPP-R: 1DTPP
-Complete steps 1 - 4 from the **From FragPipe to TP-MAP** section. In step 5 instead of running tpprNormOneDTPP(configpath,FPpath), the full TPPR workflow function will be used. remember to use the correct configutation file path and to pass the function a directory to save the results (in this case 1DTPP-TPPR folder):
+Complete steps 1 - 4 from the **From FragPipe to TP-MAP** section. In step 5 instead of running tpprNormOneDTPP(configpath,FPpath), the full TPPR workflow function will be used. Remember to use the correct configuration file path and to pass the function a directory to save the results (in this case 1DTPP-TPPR folder):
 
-```{r From TPP-R to TP-MAP}
+
 TPPRfolder <- file.path(FPpath, "1DTPP-TPPR")
+
 TPPTR_result <- TPP::analyzeTPPTR(configpath,resultPath = TPPRfolder , methods = "meltcurvefit",idVar= "Prot_ID",qualColName="qssm")
 
-```
+
 and voila! Melting curves have been fit for each protein (see Melting_curves folder, QCPlots.pdf and results_TPP-TR.xlsx). For more information on TPP-R outputs see [package website](https://bioconductor.org/packages/release/bioc/html/TPP.html).
