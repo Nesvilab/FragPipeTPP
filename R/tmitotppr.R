@@ -4,7 +4,7 @@
 #' @param directory_of_interest" Experiment folder inside FragPipe Output folder
 #'
 #' @return a list of a dictionary of old and new lables, as well as a list of temperature and TMT conversion
-#' @export
+#' @noRd
 #'
 #' @examples tmtiheader_to_tpprheaders("C:/FragPipeOutputfolder"/Treatment)
 tmtiheader_to_tpprheaders <- function(directory_of_interest){

@@ -1,10 +1,9 @@
-
 #' Extract protein description for TP-MAP compatability
 #'
 #' @param filepathdb: Path to protein database (FASTA format)
 #'
 #' @return list with protein uniprot accession numbers and corresponding description line
-#' @export
+#' @noRd
 #'
 #' @examples fastaparser("C:/protein.fas")
 fastaparser <- function(filepathdb) {
