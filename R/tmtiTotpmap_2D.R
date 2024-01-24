@@ -47,12 +47,33 @@ column_titlesformatter <- function(colstoarrenge) {
 
   renaming_dict <- list()
 
-  # List if the column names to arrange
+  # List of the column names to arrange
   arrangedcols <- c(colstoarrenge[1], colstoarrenge[length(colstoarrenge)], colstoarrenge[-c(1, length(colstoarrenge))])
 
   # Change TMTI temperature column headers to TP-MAP compatible ones
+
+  #Change TMTI headers to TPMAP compatible ones
   for (item in arrangedcols) {
-    newcolumntitle <- ifelse("_" %in% item, paste("Ref", item, sep = "_"), item)
+
+    print(item)
+    newcolumntitle <- ""
+
+    if (item == "Description") {
+
+      newcolumntitle <- "Description"
+    } else if (item == "Index") {
+
+      newcolumntitle <- "Accession"
+    } else {
+
+      #newcolumntitle <- substr(item, 2, nchar(item))
+      newcolumntitle <- sub("^.", "Ref_", item)
+
+    }
+
+    print(newcolumntitle)
+
+
     renaming_dict[[item]] <- newcolumntitle
   }
 
@@ -110,9 +131,8 @@ dataframecreator <- function(proteindb, TMTIPath) {
   finalDT <- finalDT[, newcols]
 
   # Rename Index header to Accession
-  names(finalDT)[1] <- "Accession"
+  names(finalDT)[names(finalDT) == "Index"] <- "Accession"
 
-  # Rename columns
   colnames(finalDT) <- column_titlesformatter(oldcols)[[2]]
 
   # Replace NA with zero
@@ -135,11 +155,12 @@ tmtiTotpmap_2D <- function(resultPath, fastadatabsefile){
 
   #Variables to find the correct TMTI .tsv file
   tmtifile <- "tmt-report/ratio_protein_None.tsv"
-  inputfile <-  file.path(resultPath, tmtifile)
+  tmtifilepath <-  file.path(resultPath, tmtifile)
+
 
   # Calling dataframecreator function
   tpmapDT <- dataframecreator(fastadatabsefile, tmtifilepath)
-  print(tpmapDT)
+  #print(tpmapDT)
 
   # Create folder to save 2DTPP Results
   twodtpp_output <- file.path(resultPath, "2DTPP")
