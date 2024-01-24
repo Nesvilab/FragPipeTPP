@@ -55,7 +55,7 @@ column_titlesformatter <- function(colstoarrenge) {
   #Change TMTI headers to TPMAP compatible ones
   for (item in arrangedcols) {
 
-    print(item)
+    #print(item)
     newcolumntitle <- ""
 
     if (item == "Description") {
@@ -71,7 +71,7 @@ column_titlesformatter <- function(colstoarrenge) {
 
     }
 
-    print(newcolumntitle)
+    #print(newcolumntitle)
 
 
     renaming_dict[[item]] <- newcolumntitle
