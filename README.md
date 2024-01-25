@@ -90,5 +90,7 @@ There are three functions to use:
 - **tpprNormOneDTPP** (TPPR all melting curve normalization only - required to input 1DTPP data into TP-MAP)
 
 - **tpprTotpmap** (from TPP-R normalized FragPipe data to TP-MAP input file)
+  
+- **tmtiTotpmap_2D** (FragPipe to TP-MAP conversion of 2DTPP data)
 
 ## For information and to see sample code results use browseVignettes("FragPipeToTPPR") in the RStudio Console.
