@@ -41,7 +41,7 @@ In RStudio Console:
 
 If succesfull a message will appeared saying: "The downloaded binary packages are in", and it will indicate a path in the user's local machine.
 
-### 2. Install TPP and FragPipeTPPR packages
+### 2. Install TPP and FragPipeTPP packages
 
 #### renv::install("bioc::TPP")
 
@@ -75,7 +75,7 @@ Do you want to proceed? [Y/n]: Y
 - Installing FragPipeTPP ...                 OK [built from source and cached in 2.1s]
 Successfully installed 1 package in 2.4 seconds.
 
-### 3. Load FragPipeTPPR
+### 3. Load FragPipeTPP
 
 #### library(FragPipeTPP)
 
