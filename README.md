@@ -39,7 +39,7 @@ In RStudio Console:
 
 #### install.packages("renv")
 
-If succesfull a message will appeared saying: "The downloaded binary packages are in", and it will indicate a path in the user's local machine.
+If successful a message will appeared saying: "The downloaded binary packages are in", and it will indicate a path in the user's local machine.
 
 ### 2. Install TPP and FragPipeTPP packages
 
