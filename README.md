@@ -23,7 +23,7 @@ It is an R package available through Bioconductor capable of analyzing both 1D (
   - [TPP-R at Bioconductor](https://bioconductor.org/packages/release/bioc/html/TPP.html)
 
 ## What is TP-MAP?
-It is a GUI-based TPP analysis program also available for both 1DTPP and 2DTPP data. Melting curves (1DTPP) or matrices (2DTPP) can be visualized in TP-MAP. protein-protein interactions analysis using STRING are also possible. for more information visit:
+It is a GUI-based TPP analysis program also available for both 1DTPP and 2DTPP data. Melting curves (1DTPP) or matrices (2DTPP) can be visualized in TP-MAP. Protein-protein interactions analysis using STRING are also possible. for more information visit:
 
   - [2022 bioRxiv](https://www.biorxiv.org/content/10.1101/2021.02.22.432361v2)
   
