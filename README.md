@@ -1,4 +1,4 @@
-# Thermal Protein Profiling (TPP) Data Analysis with FragPipe: FragPipeToTPPR
+# Thermal Protein Profiling (TPP) Data Analysis with FragPipe: FragPipeTPP
 ###### Update: Dec. 13th, 2023
 
 ## What is TPP?
@@ -45,7 +45,7 @@ If succesfull a message will appeared saying: "The downloaded binary packages ar
 
 #### renv::install("bioc::TPP")
 
-Below is a successful FragPipeToTPPR package installation:
+Below is a successful FragPipeTPP package installation:
 
 The following package(s) will be installed:
 - TPP [3.28.0]
@@ -57,27 +57,27 @@ Do you want to proceed? [Y/n]: Y
 - Installing TPP ...                            OK [copied from cache in 0.37s]
 Successfully installed 1 package in 0.39 seconds.
 
-#### renv::install("Nesvilab/FragPipeToTPPR")
+#### renv::install("Nesvilab/FragPipeTPP")
 
-Below is a successful FragPipeToTPPR package installation:
+Below is a successful FragPipeTPP package installation:
 
 ###### Downloading packages -------------------------------------------------------
-- Downloading FragPipeToTPPR from GitHub ...    OK [427.5 Kb in 0.67s]
+- Downloading FragPipeTPP from GitHub ...    OK [427.5 Kb in 0.67s]
 Successfully downloaded 1 package in 1.1 seconds.
 
 The following package(s) will be installed:
-- FragPipeToTPPR [Nesvilab/FragPipeToTPPR@main]
+- FragPipeTPP [Nesvilab/FragPipeTPP@main]
 These packages will be installed into "C:/Users/caror/AppData/Local/R/win-library/4.3".
 
 Do you want to proceed? [Y/n]: Y
 
 ###### Installing packages --------------------------------------------------------
-- Installing FragPipeToTPPR ...                 OK [built from source and cached in 2.1s]
+- Installing FragPipeTPP ...                 OK [built from source and cached in 2.1s]
 Successfully installed 1 package in 2.4 seconds.
 
 ### 3. Load FragPipeTPPR
 
-#### library(FragPipeToTPPR)
+#### library(FragPipeTPP)
 
 
 
@@ -93,4 +93,4 @@ There are three functions to use:
   
 - **tmtiTotpmap_2D** (FragPipe to TP-MAP conversion of 2DTPP data)
 
-## For information and to see sample code results use browseVignettes("FragPipeToTPPR") in the RStudio Console.
+## For information and to see sample code results use browseVignettes("FragPipeTPP") in the RStudio Console.

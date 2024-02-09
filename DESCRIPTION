@@ -1,4 +1,4 @@
-Package: FragPipeToTPPR
+Package: FragPipeTPP
 Title: From FragPipe Ouput to TPPR Input
 Version: 0.0.1
 Authors@R: 

@@ -1,6 +1,6 @@
 ^renv$
 ^renv\.lock$
-^FragPipeToTPPR\.Rproj$
+^FragPipeTPP\.Rproj$
 ^\.Rproj\.user$
 ^doc$
 ^Meta$
