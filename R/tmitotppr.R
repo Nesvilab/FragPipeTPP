@@ -117,6 +117,7 @@ tmtitotppr <- function(fragpipefolder, experimentlables){
         #Obtain exp label
         foundexplabel <- path_components[length(path_components)]
         Experiment <- append(Experiment, foundexplabel)
+
         #remove replicate to set condition
         conditionlabel <- unlist(strsplit(foundexplabel, "_"))
         Condition <- append(Condition, conditionlabel[1])
