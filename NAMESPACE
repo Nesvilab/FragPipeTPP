@@ -2,5 +2,6 @@
 
 export(tmtiTotpmap_2D)
 export(tmtitotppr)
+export(tmtitotppr_2D)
 export(tpprNormOneDTPP)
 export(tpprTotpmap)
