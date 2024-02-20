@@ -76,6 +76,7 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
         for (item in conditionlabel[1:2]) {
           #Temperature
           #print(item)
+          Temperature <- append(item, item)
           for (conce_val in concentrationlabels){
             #print(conce_val)
             temp_conc_label <- paste(item,conce_val, sep = "_")
@@ -149,6 +150,15 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
 
       }}
   }
+
+
+  #Create configuration file
+  configurationdf <- data.frame(Compound, Experiment, Temperature, TMTsix, TMTsevenL, TMTsevenH, TMTeightL, TMTeightH, TMTnineL, TMTnineH, TMTtenL, TMTtenH, TMTelevenL, pathcol)
+  names(configurationdf) <- c("Compound", "Experiment", "Temperature", "126","127L", "127H", "128L","128H",	"129L", "129H",	"130L",	"130H",	"131L", "Path")
+  configsavepath <- file.path(fragpipefolder, "2DTPP-TPPR", "TPP-TR_config.csv")
+  write.csv(configurationdf, configsavepath, row.names = FALSE)
+
+  return(configsavepath)
 }
 
 
