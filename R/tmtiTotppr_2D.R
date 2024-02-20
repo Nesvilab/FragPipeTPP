@@ -128,6 +128,25 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
         outputfilename <- paste(temperatures_replabel, "txt", sep = ".")
 
 
+        #Create TPP-TPPR folder if it does not exist already
+        tpprfolder <- file.path(fragpipefolder, "2DTPP-TPPR")
+
+        if (dir.exists(tpprfolder)) {
+          print("Saving results in 2DTPP-TPPR folder")
+        } else {
+          print("Creating 2DTPP-TPPR folder")
+          dir.create(tpprfolder)
+        }
+
+        #Create new path
+        Outputname <- file.path(tpprfolder, outputfilename)
+        pathcol <- append(pathcol, Outputname )
+
+        # Save data frame as a tab-delimited text file
+        #write.table(newdataframe, file = Outputname, sep = "\t", row.names = FALSE, quote = FALSE) - use base R (slower)
+        data.table::fwrite(newdataframe, file = Outputname, sep = "\t")
+
+
       }}
   }
 }
