@@ -1,3 +1,61 @@
+#' Translate TMTI headers to TPPR headers for 2DTPP data
+#'
+#' @param directory_of_interest
+#'
+#' @return a list of a dictionary of old and new lables, as well as a list of temperature and TMT conversion
+#' @noRd
+#'
+#' @examples tmtiheader_to_tpprheaders("C:/FragPipeOutputfolder")
+tmtiheader_to_tpprheaders2D <- function(directory_of_interest){
+
+  annotationfile <- ""
+  files_in_specific_directory <- list.files(directory_of_interest)
+  for (file in files_in_specific_directory){
+    if (grepl("annotation.txt", file)) {
+      annotationfile <-  file.path(directory_of_interest, file)
+
+    }
+  }
+  # Initiate a list to rename column headers
+  output_renaming_dict <- list('Index' = 'Prot_ID', "NumberPSM" = "qssm")
+
+  # Dictionary to translate TMT labels to TPP-R labels
+  tppr_labels_dict <- list(
+    "126" = "rel_fc_126", "127N" = "rel_fc_127L", "127C" = "rel_fc_127H",
+    "128N" = "rel_fc_128L", "128C" = "rel_fc_128H", "129N" = "rel_fc_129L",
+    "129C" = "rel_fc_129H", "130N" = "rel_fc_130L", "130C" = "rel_fc_130H",
+    "131N" = "rel_fc_131L"
+  )
+
+  #Concentration lables to use fro TPP-R
+  conc_vals_for_tppr <- list()
+
+  # Read annotation file
+  lines <- readLines(annotationfile)
+  for (line in lines) {
+    line <- gsub("\n", "", line)
+    splits <- strsplit(line, "\t")[[1]]
+
+    # Obtain TMT label and experimental label (temperature_concentration)
+    tmt_label <- splits[1]
+    temp_conc <- splits[2]
+
+    print(tmt_label)
+    print(temp_conc)
+
+    # Add the experimental label as key and tmt label as value
+    output_renaming_dict[[temp_conc]] <- tppr_labels_dict[[tmt_label]]
+
+    # Change formatting to match the one needed by TPP-R config file
+    config_tmt_label <- gsub("rel_fc_", "", tppr_labels_dict[[tmt_label]])
+    exp_label_spl <- unlist(strsplit(temp_conc, "_"))
+    config_temp_label <- exp_label_spl[2]
+    conc_vals_for_tppr [[config_tmt_label]] <- as.numeric(config_temp_label)
+  }
+  return(list(output_renaming_dict, conc_vals_for_tppr))
+}
+
+
 #' Convert FragPipe Output to TPP-R input (for 2DTPP analysis)
 #'
 #' @param fragpipefolder: Path to the folder where FragPipe saves results
@@ -102,7 +160,7 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
         #print(newdataframe[, -1])
 
         #TODO: Use annotation file to replace the temperature_experiment with appropriate TMT -labels
-        tpprheaders <- tmtiheader_to_tpprheaders(folder)
+        tpprheaders <- tmtiheader_to_tpprheaders2D(folder)
         #print(tpprheaders)
 
         #Extract the TMT-label to Celcius conversion
@@ -124,7 +182,7 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
         #print(tpprheaders[1])
         #Place correct headers
         names(newdataframe) <- unlist(tpprheaders[1])
-        print(newdataframe)
+        #print(newdataframe)
 
         outputfilename <- paste(temperatures_replabel, "txt", sep = ".")
 
