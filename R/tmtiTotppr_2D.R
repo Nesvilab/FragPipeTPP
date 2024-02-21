@@ -29,9 +29,8 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
   )
 
   #Concentration lables to use fro TPP-R
-  conc_vals_for_tppr <- list()
-  tmt_tempconc_dict <- list()
 
+  tmt_tempconc_dict <- list()
   # Read annotation file
   lines <- readLines(annotationfile)
   for (line in lines) {
@@ -42,30 +41,50 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
     tmt_label <- splits[1]
     temp_conc <- splits[2]
 
-    print(tmt_label)
-    print(temp_conc)
+    #print(tmt_label)
+    #print(temp_conc)
 
     tmt_tempconc_dict[[tmt_label]] <- temp_conc
 
     # Add the experimental label as key and tmt label as value
     output_renaming_dict[[temp_conc]] <- tppr_labels_dict[[tmt_label]]
 
-    # Change formatting to match the one needed by TPP-R config file
-    config_tmt_label <- gsub("rel_fc_", "", tppr_labels_dict[[tmt_label]])
-    exp_label_spl <- unlist(strsplit(temp_conc, "_"))
-    config_temp_label <- exp_label_spl[2]
-    conc_vals_for_tppr [[config_tmt_label]] <- as.numeric(config_temp_label)
-  }
 
-  print(tmt_tempconc_dict)
-  print(names(tmt_tempconc_dict))
-
-  for (labeltmt in tmt_tempconc_dict){
-    print(labeltmt)
   }
 
 
-  return(list(output_renaming_dict, conc_vals_for_tppr))
+
+
+  #print(tmt_tempconc_dict)
+  #print(names(tmt_tempconc_dict))
+
+  output_dict <- list()
+
+  for (temp_val in configtemperatures){
+    conc_vals_for_tppr <- list()
+    for (labeltmt in names(tmt_tempconc_dict)){
+
+      #print(tmt_tempconc_dict[labeltmt])
+
+      # Change formatting to match the one needed by TPP-R config file
+      config_tmt_label <- gsub("rel_fc_", "", tppr_labels_dict[[labeltmt]])
+      label_spl <- unlist(strsplit(as.character(tmt_tempconc_dict[labeltmt]), "_"))
+      config_conc_label <- label_spl[2]
+      temp_flag <- label_spl[1]
+      if (temp_val==temp_flag){
+        conc_vals_for_tppr [[config_tmt_label]] <- as.numeric(config_conc_label)
+      }else{
+        conc_vals_for_tppr [[config_tmt_label]] <- "-"
+
+      }
+
+    }
+    output_dict[[temp_val]] <- conc_vals_for_tppr
+
+  }
+
+
+  return(list(output_renaming_dict, output_dict))
 }
 
 
@@ -206,6 +225,8 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
 
         #Extract the TMT-label to Celcius conversion
         configtempvals <- tpprheaders[2][[1]]
+
+        print(configtempvals)
 
 
         TMTsix <- append(TMTsix, configtempvals$`126` )
