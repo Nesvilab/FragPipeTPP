@@ -8,7 +8,7 @@
 #' @examples tmtiheader_to_tpprheaders("C:/FragPipeOutputfolder")
 tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperatures){
 
-  print(configtemperatures)
+  #print(configtemperatures)
   annotationfile <- ""
   files_in_specific_directory <- list.files(directory_of_interest)
   for (file in files_in_specific_directory){
@@ -30,6 +30,7 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
 
   #Concentration lables to use fro TPP-R
   conc_vals_for_tppr <- list()
+  tmt_tempconc_dict <- list()
 
   # Read annotation file
   lines <- readLines(annotationfile)
@@ -44,18 +45,26 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
     print(tmt_label)
     print(temp_conc)
 
+    tmt_tempconc_dict[[tmt_label]] <- temp_conc
+
     # Add the experimental label as key and tmt label as value
     output_renaming_dict[[temp_conc]] <- tppr_labels_dict[[tmt_label]]
 
-    for (temp_val in configtemperatures){
-      print(temp_val)
-    }
     # Change formatting to match the one needed by TPP-R config file
     config_tmt_label <- gsub("rel_fc_", "", tppr_labels_dict[[tmt_label]])
     exp_label_spl <- unlist(strsplit(temp_conc, "_"))
     config_temp_label <- exp_label_spl[2]
     conc_vals_for_tppr [[config_tmt_label]] <- as.numeric(config_temp_label)
   }
+
+  print(tmt_tempconc_dict)
+  print(names(tmt_tempconc_dict))
+
+  for (labeltmt in tmt_tempconc_dict){
+    print(labeltmt)
+  }
+
+
   return(list(output_renaming_dict, conc_vals_for_tppr))
 }
 
