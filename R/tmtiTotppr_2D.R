@@ -53,14 +53,15 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
   }
 
 
-
-
-  #print(tmt_tempconc_dict)
-  #print(names(tmt_tempconc_dict))
-
   output_dict <- list()
 
-  for (temp_val in configtemperatures){
+  folderspl <- unlist(strsplit(directory_of_interest, "/"))
+  folderlabel <- folderspl[length(folderspl)]
+  configtemperatures <- unlist(strsplit(folderlabel, "_"))
+
+  #print(configtemperatures)
+
+  for (temp_val in configtemperatures[1:2]){
     conc_vals_for_tppr <- list()
     for (labeltmt in names(tmt_tempconc_dict)){
 
@@ -73,15 +74,21 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
       temp_flag <- label_spl[1]
       if (temp_val==temp_flag){
         conc_vals_for_tppr [[config_tmt_label]] <- as.numeric(config_conc_label)
+        output_dict[[temp_val]] <- conc_vals_for_tppr
       }else{
         conc_vals_for_tppr [[config_tmt_label]] <- "-"
+        output_dict[[temp_val]] <- conc_vals_for_tppr
 
       }
 
     }
-    output_dict[[temp_val]] <- conc_vals_for_tppr
+
+
 
   }
+
+  #print(directory_of_interest)
+  #print(output_dict)
 
 
   return(list(output_renaming_dict, output_dict))
@@ -181,7 +188,7 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
         for (item in conditionlabel[1:2]) {
           #Temperature
           Experiment <- append(Experiment, temperatures_replabel)
-          Temperature <- append(Temperature, item)
+
           Compound <- append(Compound, compound_val)
           outputfilename <- paste(temperatures_replabel, "txt", sep = ".")
           #Create new path
@@ -226,19 +233,40 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
         #Extract the TMT-label to Celcius conversion
         configtempvals <- tpprheaders[2][[1]]
 
-        print(configtempvals)
+        #print("print(configtempvals)")
+        #print(configtempvals)
+        #print(names(configtempvals))
+
+        for (temperature_val in names(configtempvals)){
+          Temperature <- append(Temperature, temperature_val)
 
 
-        TMTsix <- append(TMTsix, configtempvals$`126` )
-        TMTsevenL <- append(TMTsevenL, configtempvals$`127L` )
-        TMTsevenH <- append(TMTsevenH, configtempvals$`127H` )
-        TMTeightL <- append(TMTeightL, configtempvals$`128L` )
-        TMTeightH <- append(TMTeightH, configtempvals$`128H` )
-        TMTnineL <- append(TMTnineL, configtempvals$`129L` )
-        TMTnineH <- append(TMTnineH, configtempvals$`129H` )
-        TMTtenL <- append(TMTtenL, configtempvals$`130L` )
-        TMTtenH <- append(TMTtenH, configtempvals$`130H` )
-        TMTelevenL <- append(TMTelevenL, configtempvals$`131L` )
+          TMTsix <- append(TMTsix, configtempvals[[temperature_val]]$`126` )
+          TMTsevenL <- append(TMTsevenL, configtempvals[[temperature_val]]$`127L` )
+          TMTsevenH <- append(TMTsevenH, configtempvals[[temperature_val]]$`127H` )
+          TMTeightL <- append(TMTeightL, configtempvals[[temperature_val]]$`128L` )
+          TMTeightH <- append(TMTeightH, configtempvals[[temperature_val]]$`128H` )
+          TMTnineL <- append(TMTnineL, configtempvals[[temperature_val]]$`129L` )
+          TMTnineH <- append(TMTnineH, configtempvals[[temperature_val]]$`129H` )
+          TMTtenL <- append(TMTtenL, configtempvals[[temperature_val]]$`130L` )
+          TMTtenH <- append(TMTtenH, configtempvals[[temperature_val]]$`130H` )
+          TMTelevenL <- append(TMTelevenL, configtempvals[[temperature_val]]$`131L` )
+
+          if (configtempvals[[temperature_val]]$`131L` == "0"){
+            refencecol <- append(refencecol, "131L")
+          }else{
+            refencecol <- append(refencecol, "128H")
+          }
+
+
+
+        }
+
+
+
+
+
+
 
         #(colnames(newdataframe))
         #print(tpprheaders[1])
@@ -263,10 +291,11 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
   print(Compound)
   print(Experiment)
   print(Temperature)
+  print(TMTsix)
 
   #Create configuration file
-  configurationdf <- data.frame(Compound, Experiment, Temperature, TMTsix, TMTsevenL, TMTsevenH, TMTeightL, TMTeightH, TMTnineL, TMTnineH, TMTtenL, TMTtenH, TMTelevenL, pathcol)
-  names(configurationdf) <- c("Compound", "Experiment", "Temperature", "126","127L", "127H", "128L","128H",	"129L", "129H",	"130L",	"130H",	"131L", "Path")
+  configurationdf <- data.frame(Compound, Experiment, Temperature, TMTsix, TMTsevenL, TMTsevenH, TMTeightL, TMTeightH, TMTnineL, TMTnineH, TMTtenL, TMTtenH, TMTelevenL, refencecol, pathcol)
+  names(configurationdf) <- c("Compound", "Experiment", "Temperature", "126","127L", "127H", "128L","128H",	"129L", "129H",	"130L",	"130H",	"131L", "RefCol", "Path")
   configsavepath <- file.path(fragpipefolder, "2DTPP-TPPR", "TPP-TR_config.csv")
   write.csv(configurationdf, configsavepath, row.names = FALSE)
 
