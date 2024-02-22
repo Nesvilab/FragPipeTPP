@@ -4,7 +4,12 @@
 \alias{tmtitotppr_2D}
 \title{Convert FragPipe Output to TPP-R input (for 2DTPP analysis)}
 \usage{
-tmtitotppr_2D(fragpipefolder, experimentlabels, concentrationlabels, compound)
+tmtitotppr_2D(
+  fragpipefolder,
+  experimentlabels,
+  concentrationlabels,
+  compound_val
+)
 }
 \arguments{
 \item{fragpipefolder:}{Path to the folder where FragPipe saves results}
