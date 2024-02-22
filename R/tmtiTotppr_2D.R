@@ -1,14 +1,15 @@
 #' Translate TMTI headers to TPPR headers for 2DTPP data
 #'
-#' @param directory_of_interest
+#' @param directory_of_interest: fragPipe directory
+#' @param configtemperatures: A list fo temperatures
 #'
-#' @return a list of a dictionary of old and new lables, as well as a list of temperature and TMT conversion
+#' @return a list of a dictionary of old and new labels, as well as a list of temperatures with lists of TMT anc Concentration conversion
 #' @noRd
 #'
 #' @examples tmtiheader_to_tpprheaders("C:/FragPipeOutputfolder")
 tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperatures){
 
-  #print(configtemperatures)
+  #Find annotation file: Connection between temperature/concentration and TMT label
   annotationfile <- ""
   files_in_specific_directory <- list.files(directory_of_interest)
   for (file in files_in_specific_directory){
@@ -30,6 +31,7 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
 
   #Concentration lables to use fro TPP-R
 
+  #Initiate a list to stores TMT lable with temperature+concentration connection
   tmt_tempconc_dict <- list()
   # Read annotation file
   lines <- readLines(annotationfile)
@@ -41,9 +43,7 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
     tmt_label <- splits[1]
     temp_conc <- splits[2]
 
-    #print(tmt_label)
-    #print(temp_conc)
-
+    #TMT label as key, temperature+concentration as value
     tmt_tempconc_dict[[tmt_label]] <- temp_conc
 
     # Add the experimental label as key and tmt label as value
@@ -52,9 +52,10 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
 
   }
 
-
+  #"Dictionary" to output TMT lable and concnetration relations per temperature
   output_dict <- list()
 
+  #Get the temperature for each experimental folder title
   folderspl <- unlist(strsplit(directory_of_interest, "/"))
   folderlabel <- folderspl[length(folderspl)]
   configtemperatures <- unlist(strsplit(folderlabel, "_"))
@@ -263,20 +264,11 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
         }
 
 
-
-
-
-
-
         #(colnames(newdataframe))
         #print(tpprheaders[1])
         #Place correct headers
         names(newdataframe) <- unlist(tpprheaders[1])
         #print(newdataframe)
-
-
-
-
 
 
 
@@ -303,8 +295,8 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
 }
 
 #Test
-twofragpipe <- "Z:/crojaram/TPP_Project/PXD012423/2DTPP/ATP_rep1/FP20-1_build23"
-conc_labels <- c(0,0.005,0.05,0.5,2)
-labels_exp <- c("42_44","46_48","50_52","54_56","58_60","62_64")
-compound <-("ATP")
-configtwo <- tmtitotppr_2D(twofragpipe,labels_exp,conc_labels,compound)
+#twofragpipe <- "Z:/crojaram/TPP_Project/PXD012423/2DTPP/ATP_rep1/FP20-1_build23"
+#conc_labels <- c(0,0.005,0.05,0.5,2)
+#labels_exp <- c("42_44","46_48","50_52","54_56","58_60","62_64")
+#compound <-("ATP")
+#configtwo <- tmtitotppr_2D(twofragpipe,labels_exp,conc_labels,compound)
