@@ -60,19 +60,21 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
   folderlabel <- folderspl[length(folderspl)]
   configtemperatures <- unlist(strsplit(folderlabel, "_"))
 
-  #print(configtemperatures)
-
+  #For the temperatures in the experiment
   for (temp_val in configtemperatures[1:2]){
+    #Create a sublist for concentration values
     conc_vals_for_tppr <- list()
+    #For each TMT label
     for (labeltmt in names(tmt_tempconc_dict)){
-
-      #print(tmt_tempconc_dict[labeltmt])
 
       # Change formatting to match the one needed by TPP-R config file
       config_tmt_label <- gsub("rel_fc_", "", tppr_labels_dict[[labeltmt]])
       label_spl <- unlist(strsplit(as.character(tmt_tempconc_dict[labeltmt]), "_"))
+      #Get concentration
       config_conc_label <- label_spl[2]
+      #Get temperature
       temp_flag <- label_spl[1]
+      #If the concentration happens to be at the current temperature being looked at save the concentration
       if (temp_val==temp_flag){
         conc_vals_for_tppr [[config_tmt_label]] <- as.numeric(config_conc_label)
         output_dict[[temp_val]] <- conc_vals_for_tppr
@@ -84,12 +86,7 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
 
     }
 
-
-
   }
-
-  #print(directory_of_interest)
-  #print(output_dict)
 
 
   return(list(output_renaming_dict, output_dict))
@@ -124,10 +121,6 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
 
   #print(folders)
 
-
-  #vectors to store congif file columns
-
-  #Feb 16th: Replace first three with Compound, Experiment and Temperature
   #Create TPP-TPPR folder if it does not exist already
   tpprfolder <- file.path(fragpipefolder, "2DTPP-TPPR")
 
@@ -138,7 +131,7 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
     dir.create(tpprfolder)
   }
 
-
+  #Vectors to store congif file columns
   Compound <- c()
   Experiment <- c()
   Temperature <- c()
@@ -172,75 +165,52 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
         # Splitting the file path using strsplit
         path_components <- unlist(strsplit(folder, "/"))
 
-        #print(path_components)
-
-        #Adding to the columns of the future config file
+        #Adding temperature and replicate for future use
         temperatures_replabel <- path_components[length(path_components)]
 
         #print(paste("temperatures_replabel",temperatures_replabel))
 
-
-
-
+        #For each temperature set
         conditionlabel <- unlist(strsplit(temperatures_replabel, "_"))
 
         temp_conce_labels_ls <- list()
 
         for (item in conditionlabel[1:2]) {
+
           #Temperature
           Experiment <- append(Experiment, temperatures_replabel)
-
+          #Add compound
           Compound <- append(Compound, compound_val)
+          #Create new path to file with data
           outputfilename <- paste(temperatures_replabel, "txt", sep = ".")
-          #Create new path
           Outputname <- file.path(tpprfolder, outputfilename)
           pathcol <- append(pathcol, Outputname )
-
+          #For each concentration value
           for (conce_val in concentrationlabels){
-            #print(conce_val)
+            #Add the columns to extract from TMTI file
             temp_conc_label <- paste(item,conce_val, sep = "_")
             lscolumnstoget[[length(lscolumnstoget) + 1]] <- paste("X",temp_conc_label, sep="")
-
-            #print(paste("temp_conc_label",temp_conc_label))
-
-            #TODO: Gather temperatures and concentrations for config file
-
-
-
 
             }
           }
 
-
-
-
-        #print(paste("lscolumnstoget",lscolumnstoget))
         # Selecting columns by name
+        print(paste("Extracting columns needed for experiment", temperatures_replabel))
         newdataframe <- tmtidata[, unlist(lscolumnstoget)]
-        #print(class(newdataframe))
-        #print(newdataframe$"Index")
-
-       # print(colnames(newdataframe))
 
         #Normalization to lowest temperature (first two columns are protein id and qssm filtering criteria)
         newdataframe[, 3:ncol(newdataframe)] <-   newdataframe[, 3:ncol(newdataframe)] / newdataframe[,3]
 
-        #print(newdataframe[, -1])
-
-        #TODO: Use annotation file to replace the temperature_experiment with appropriate TMT -labels
+        #Use annotation file to replace the temperature_experiment with appropriate TMT -labels
         tpprheaders <- tmtiheader_to_tpprheaders2D(folder, Temperature)
-        #print(tpprheaders)
 
         #Extract the TMT-label to Celcius conversion
         configtempvals <- tpprheaders[2][[1]]
 
-        #print("print(configtempvals)")
-        #print(configtempvals)
-        #print(names(configtempvals))
-
+        #For each temperature extract the appropriate TMT lables use for the avialble concentration
         for (temperature_val in names(configtempvals)){
-          Temperature <- append(Temperature, temperature_val)
 
+          Temperature <- append(Temperature, temperature_val)
 
           TMTsix <- append(TMTsix, configtempvals[[temperature_val]]$`126` )
           TMTsevenL <- append(TMTsevenL, configtempvals[[temperature_val]]$`127L` )
@@ -259,17 +229,11 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
             refencecol <- append(refencecol, "128H")
           }
 
-
-
         }
 
-
-        #(colnames(newdataframe))
-        #print(tpprheaders[1])
         #Place correct headers
         names(newdataframe) <- unlist(tpprheaders[1])
         #print(newdataframe)
-
 
 
         # Save data frame as a tab-delimited text file
@@ -280,11 +244,7 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
       }}
   }
 
-  print(Compound)
-  print(Experiment)
-  print(Temperature)
-  print(TMTsix)
-
+  print("Writing Configuration File...")
   #Create configuration file
   configurationdf <- data.frame(Compound, Experiment, Temperature, TMTsix, TMTsevenL, TMTsevenH, TMTeightL, TMTeightH, TMTnineL, TMTnineH, TMTtenL, TMTtenH, TMTelevenL, refencecol, pathcol)
   names(configurationdf) <- c("Compound", "Experiment", "Temperature", "126","127L", "127H", "128L","128H",	"129L", "129H",	"130L",	"130H",	"131L", "RefCol", "Path")
