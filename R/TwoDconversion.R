@@ -100,7 +100,9 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   protsv_path <-  file.path(expfolder, protfile)
   print("protsv_path")
   print(protsv_path)
+  #This creates a tibble, incompatible with the normalization downstream, bult makes it easier to do other stuff
   DT <- read_tsv(protsv_path)
+
 
   # Copy original dataframe to prevent changes to the main DT
   outputDT <- DT
@@ -119,19 +121,27 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   # Data frame with desired columns
   finalDT <- select(outputDT, all_of(outputcolumns))
 
-  print(finalDT)
-
-  # Normalizing for lowest temperature (needed by TPP-R)
-  #finalDT <- finalDT %>%
-   # mutate(across(starts_with("TMT"), ~ . / .[2]))
-
   # Convert Nan to zero
   finalDT[is.na(finalDT)] <- 0
 
   # Rename to TPP-R compatible columns
   names(finalDT) <- oldcoltonewcol[names(finalDT)]
 
-  print(finalDT)
+  #128H and 131L are used as ref columns
+  newcolumns <- colnames(finalDT)
+  onetwoeightindex <- match("rel_fc_128H", newcolumns)
+  onethirtyoneindex <- match("rel_fc_131L", newcolumns)
+
+
+  #128H normalization
+  #Using a regular dataframe: finalDT[, (onetwoeightindex-4):onetwoeightindex] <- finalDT[, (onetwoeightindex-4):onetwoeightindex] / finalDT[,onetwoeightindex]
+  finalDT <- finalDT %>%
+    mutate(across((onetwoeightindex-4):onetwoeightindex, ~ . / .data$"rel_fc_128H"))
+
+  #131L normalization
+  #finalDT[, (onethirtyoneindex-4):onethirtyoneindex] <- finalDT[, (onethirtyoneindex-4):onethirtyoneindex] / finalDT[,onethirtyoneindex]
+  finalDT <- finalDT %>%
+    mutate(across((onethirtyoneindex-4):onethirtyoneindex, ~ . / .data$"rel_fc_131L"))
 
   return(list(finalDT, tmt_to_tempdict))
 }
@@ -224,21 +234,13 @@ twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels
 
         convertedfile <- fragpipe_to_TPPR(folder, experimentlabels)
 
-        print(colnames((convertedfile)))
-        print(lscolumnstoget)
-
-        # Selecting columns by name
-        print(paste("Extracting columns needed for experiment", temperatures_replabel))
-        newdataframe <- convertedfile[, unlist(lscolumnstoget)]
-
-        #Normalization to lowest temperature (first two columns are protein id and qssm filtering criteria)
-        newdataframe[, 3:ncol(newdataframe)] <-   newdataframe[, 3:ncol(newdataframe)] / newdataframe[,3]
 
         #Use annotation file to replace the temperature_experiment with appropriate TMT -labels
-        tpprheaders <- tmtiheader_to_tpprheaders2D(folder, Temperature)
+        #tpprheaders <- tmtiheader_to_tpprheaders2D(folder, Temperature)
 
         #Extract the TMT-label to Celcius conversion
-        configtempvals <- tpprheaders[2][[1]]
+        #configtempvals <- tpprheaders[2][[1]]
+        configtempvals <- convertedfile[2][[1]]
 
         #For each temperature extract the appropriate TMT lables use for the avialble concentration
         for (temperature_val in names(configtempvals)){
@@ -264,14 +266,13 @@ twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels
 
         }
 
-        #Place correct headers
-        names(newdataframe) <- unlist(tpprheaders[1])
-        #print(newdataframe)
-
+        print(convertedfile[1])
+        print(type(convertedfile[1]))
 
         # Save data frame as a tab-delimited text file
         #write.table(newdataframe, file = Outputname, sep = "\t", row.names = FALSE, quote = FALSE) - use base R (slower)
-        data.table::fwrite(newdataframe, file = Outputname, sep = "\t")
+        #data.table::fwrite(convertedfile[1], file = Outputname, sep = "\t")
+        write_csv(convertedfile[1], file = Outputname)
 
 
       }}
