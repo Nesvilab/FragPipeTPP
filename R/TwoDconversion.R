@@ -1,5 +1,7 @@
 library(readr)
 library(dplyr)
+library(tidyr)
+library(TPP2D)
 
 tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperatures){
 
@@ -13,14 +15,15 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
     }
   }
   # Initiate a list to rename column headers
-  output_renaming_dict <- list('Protein ID' = 'Prot_ID', "Unique Peptides" = "qupm")
+  output_renaming_dict <- list('Protein ID' = 'Prot_ID', "Unique Peptides" = "qupm",
+                               'Unique Spectral Count' = "qusm")
 
   # Dictionary to translate TMT labels to TPP-R labels
   tppr_labels_dict <- list(
-    "126" = "rel_fc_126", "127N" = "rel_fc_127L", "127C" = "rel_fc_127H",
-    "128N" = "rel_fc_128L", "128C" = "rel_fc_128H", "129N" = "rel_fc_129L",
-    "129C" = "rel_fc_129H", "130N" = "rel_fc_130L", "130C" = "rel_fc_130H",
-    "131N" = "rel_fc_131L"
+    "126" = "sumionarea_126", "127N" = "sumionarea_127L", "127C" = "sumionarea_127H",
+    "128N" = "sumionarea_128L", "128C" = "sumionarea_128H", "129N" = "sumionarea_129L",
+    "129C" = "sumionarea_129H", "130N" = "sumionarea_130L", "130C" = "sumionarea_130H",
+    "131N" = "sumionarea_131L"
   )
 
   #Concentration lables to use fro TPP-R
@@ -62,7 +65,7 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
     for (labeltmt in names(tmt_tempconc_dict)){
 
       # Change formatting to match the one needed by TPP-R config file
-      config_tmt_label <- gsub("rel_fc_", "", tppr_labels_dict[[labeltmt]])
+      config_tmt_label <- gsub("sumionarea_", "", tppr_labels_dict[[labeltmt]])
       label_spl <- unlist(strsplit(as.character(tmt_tempconc_dict[labeltmt]), "_"))
       #Get concentration
       config_conc_label <- label_spl[2]
@@ -113,35 +116,33 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   referenceindex <- match("Indistinguishable Proteins", thecolumns)
   protidndex <- match("Protein ID", thecolumns)
   uniquepepindex <- match("Unique Peptides", thecolumns)
+  uniquespectralindex <- match("Unique Spectral Count", thecolumns)
   outputcolumns <- thecolumns[(referenceindex + 1):length(thecolumns)]
 
   # Add as first column the one that contains the protein ID (the second column in the protein.tsv file), then the unique peptides per protein
-  outputcolumns <- c(thecolumns[protidndex], thecolumns[uniquepepindex], outputcolumns)
+  outputcolumns <- c(thecolumns[protidndex], thecolumns[uniquepepindex], thecolumns[uniquespectralindex], outputcolumns)
 
   # Data frame with desired columns
   finalDT <- select(outputDT, all_of(outputcolumns))
-
-  # Convert Nan to zero
-  finalDT[is.na(finalDT)] <- 0
 
   # Rename to TPP-R compatible columns
   names(finalDT) <- oldcoltonewcol[names(finalDT)]
 
   #128H and 131L are used as ref columns
   newcolumns <- colnames(finalDT)
-  onetwoeightindex <- match("rel_fc_128H", newcolumns)
-  onethirtyoneindex <- match("rel_fc_131L", newcolumns)
+  #onetwoeightindex <- match("sumionarea_128H", newcolumns)
+  #onethirtyoneindex <- match("sumionarea_131L", newcolumns)
 
 
   #128H normalization
   #Using a regular dataframe: finalDT[, (onetwoeightindex-4):onetwoeightindex] <- finalDT[, (onetwoeightindex-4):onetwoeightindex] / finalDT[,onetwoeightindex]
-  finalDT <- finalDT %>%
-    mutate(across((onetwoeightindex-4):onetwoeightindex, ~ . / .data$"rel_fc_128H"))
+  #finalDT <- finalDT %>%
+   # mutate(across((onetwoeightindex-4):onetwoeightindex, ~ . / .data$"sumionarea_128H"))
 
   #131L normalization
   #finalDT[, (onethirtyoneindex-4):onethirtyoneindex] <- finalDT[, (onethirtyoneindex-4):onethirtyoneindex] / finalDT[,onethirtyoneindex]
-  finalDT <- finalDT %>%
-    mutate(across((onethirtyoneindex-4):onethirtyoneindex, ~ . / .data$"rel_fc_131L"))
+  #finalDT <- finalDT %>%
+   # mutate(across((onethirtyoneindex-4):onethirtyoneindex, ~ . / .data$"sumionarea_131L"))
 
   return(list(finalDT, tmt_to_tempdict))
 }
@@ -267,12 +268,12 @@ twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels
         }
 
         print(convertedfile[1])
-        print(type(convertedfile[1]))
+        print(class(convertedfile[1]))
 
         # Save data frame as a tab-delimited text file
         #write.table(newdataframe, file = Outputname, sep = "\t", row.names = FALSE, quote = FALSE) - use base R (slower)
         #data.table::fwrite(convertedfile[1], file = Outputname, sep = "\t")
-        write_csv(convertedfile[1], file = Outputname)
+        write.table(convertedfile[1], file = Outputname, sep = "\t", row.names = FALSE, quote = FALSE)
 
 
       }}
@@ -294,5 +295,17 @@ conc_labels <- c(0,0.005,0.05,0.5,2)
 labels_exp <- c("42_44","46_48","50_52","54_56","58_60","62_64")
 compound <-("ATP")
 configtwo <- twoDConversion(twofragpipe,labels_exp,conc_labels,compound)
+
+tpp2dResults <- TPP::analyze2DTPP(configTable = configtwo,
+                                  compFc = TRUE,
+                                  idVar = "Prot_ID",
+                                  intensityStr = "sumionarea_",
+                                  qualColName = "qupm",
+                                  nonZeroCols = "qusm",
+                                  methods = "doseResponse",
+                                  createReport = "none",
+                                  resultPath = file.path(twofragpipe, "2DTPP-TPPR")
+)
+
 
 
