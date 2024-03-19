@@ -19,7 +19,7 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
     }
   }
   # Initiate a list to rename column headers
-  output_renaming_dict <- list('Index' = 'Prot_ID', "NumberPSM" = "qssm")
+  output_renaming_dict <- list('Index' = 'Prot_ID', "NumberPSM" = "qusm")
 
   # Dictionary to translate TMT labels to TPP-R labels
   tppr_labels_dict <- list(
@@ -199,7 +199,7 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
         newdataframe <- tmtidata[, unlist(lscolumnstoget)]
 
         #Normalization to lowest temperature (first two columns are protein id and qssm filtering criteria)
-        newdataframe[, 3:ncol(newdataframe)] <-   newdataframe[, 3:ncol(newdataframe)] / newdataframe[,3]
+        #newdataframe[, 3:ncol(newdataframe)] <-   newdataframe[, 3:ncol(newdataframe)] / newdataframe[,3]
 
         #Use annotation file to replace the temperature_experiment with appropriate TMT -labels
         tpprheaders <- tmtiheader_to_tpprheaders2D(folder, Temperature)
@@ -266,7 +266,7 @@ tpp2dResults <- TPP::analyze2DTPP(configTable = configtwo,
                                   compFc = TRUE,
                                   idVar = "Prot_ID",
                                   intensityStr = "rel_fc_",
-                                  nonZeroCols = "qssm",
+                                  nonZeroCols = "qusm",
                                   methods = "doseResponse",
                                   createReport = "none",
                                   resultPath = list_of_data[2]
