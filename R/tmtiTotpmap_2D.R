@@ -2,7 +2,7 @@
 #'
 #' @param filepathdb
 #'
-#' @returnlist with protein uniprot accession numbers and corresponding description line
+#' @return list with protein uniprot accession numbers and corresponding description line
 #' @noRd
 #'
 #' @examples fastaparser("C:/protein.fas")
@@ -150,7 +150,8 @@ dataframecreator <- function(proteindb, TMTIPath) {
 #' @return void
 #' @export
 #'
-#' @examples
+#' @examples tmtiTotpmap_2D("c:/FragPipefolder", "c:/proteindatabase.fas")
+#'
 tmtiTotpmap_2D <- function(resultPath, fastadatabsefile){
 
   #Variables to find the correct TMTI .tsv file

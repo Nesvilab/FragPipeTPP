@@ -17,3 +17,7 @@ void
 \description{
 Performs 2DTPP data file conversion FragPipe outputs to TP-MAP input
 }
+\examples{
+tmtiTotpmap_2D("c:/FragPipefolder", "c:/proteindatabase.fas")
+
+}
