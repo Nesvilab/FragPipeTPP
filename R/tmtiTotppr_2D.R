@@ -162,6 +162,7 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
       lscolumnstoget <- list("Index", "NumberPSM")
       if (grepl(label, folder)) {
 
+
         # Splitting the file path using strsplit
         path_components <- unlist(strsplit(folder, "/"))
 
@@ -192,7 +193,18 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
             lscolumnstoget[[length(lscolumnstoget) + 1]] <- paste("X",temp_conc_label, sep="")
 
             }
-          }
+        }
+
+        #protein .tsv file to extract "Unique peptides column
+        protname <- "protein.tsv"
+        protfilepath <-  file.path(folder, protname)
+
+        #From file to dataframe
+        protdata <- read.delim(protfilepath)
+
+        #extract qupm values
+        protcolumnstoget <- list("Protein.ID", "Unique.Peptides")
+        qupmdataframe <- protdata[, unlist(protcolumnstoget)]
 
         # Selecting columns by name
         print(paste("Extracting columns needed for experiment", temperatures_replabel))
@@ -235,6 +247,32 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
         names(newdataframe) <- unlist(tpprheaders[1])
         #print(newdataframe)
 
+        #Add dummy qupm column only if the lowest temperature is not null
+
+        outputheaders <- colnames(newdataframe)
+
+        print(outputheaders)
+
+        condition_function <- function(row) {
+          if (!is.na(row[outputheaders[3]])) {
+
+            row_number <- which(qupmdataframe$Protein.ID == row["Prot_ID"])
+            qupm_val <-  qupmdataframe[row_number, "Unique.Peptides"]
+
+
+            return(qupm_val)
+          } else {
+            return(NA)
+          }
+        }
+
+        print(outputheaders)
+        #newdataframe$qupm <- ifelse(!is.na(newdataframe$outputheaders[3]), 2, NA)
+
+        newdataframe$qupm <- apply(newdataframe, 1, condition_function)
+
+
+
 
         # Save data frame as a tab-delimited text file
         #write.table(newdataframe, file = Outputname, sep = "\t", row.names = FALSE, quote = FALSE) - use base R (slower)
@@ -249,6 +287,7 @@ tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels,
   configurationdf <- data.frame(Compound, Experiment, Temperature, TMTsix, TMTsevenL, TMTsevenH, TMTeightL, TMTeightH, TMTnineL, TMTnineH, TMTtenL, TMTtenH, TMTelevenL, refencecol, pathcol)
   names(configurationdf) <- c("Compound", "Experiment", "Temperature", "126","127L", "127H", "128L","128H",	"129L", "129H",	"130L",	"130H",	"131L", "RefCol", "Path")
   configsavepath <- file.path(fragpipefolder, "2DTPP-TPPR", "TPP-TR_config.csv")
+
   write.csv(configurationdf, configsavepath, row.names = FALSE)
 
   return(configsavepath)
@@ -262,6 +301,9 @@ labels_exp <- c("42_44","46_48","50_52","54_56","58_60","62_64")
 compound <-("ATP")
 configtwo <- tmtitotppr_2D(twofragpipe,labels_exp,conc_labels,compound)
 
+saveoutput <- file.path(twofragpipe, "2DTPP-TPPR")
+
+
 tpp2dResults <- TPP::analyze2DTPP(configTable = configtwo,
                                   compFc = TRUE,
                                   idVar = "Prot_ID",
@@ -269,5 +311,5 @@ tpp2dResults <- TPP::analyze2DTPP(configTable = configtwo,
                                   nonZeroCols = "qusm",
                                   methods = "doseResponse",
                                   createReport = "none",
-                                  resultPath = list_of_data[2]
-)
+                                  resultPath = saveoutput)
+
