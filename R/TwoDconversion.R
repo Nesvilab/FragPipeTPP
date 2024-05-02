@@ -289,23 +289,7 @@ twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels
   return(configsavepath)
 }
 
-#Test
-twofragpipe <- "Z:/crojaram/TPP_Project/PXD012423/2DTPP/ATP_rep1/FP20-1_build23"
-conc_labels <- c(0,0.005,0.05,0.5,2)
-labels_exp <- c("42_44","46_48","50_52","54_56","58_60","62_64")
-compound <-("ATP")
-configtwo <- twoDConversion(twofragpipe,labels_exp,conc_labels,compound)
 
-tpp2dResults <- TPP::analyze2DTPP(configTable = configtwo,
-                                  compFc = TRUE,
-                                  idVar = "Prot_ID",
-                                  intensityStr = "sumionarea_",
-                                  qualColName = "qupm",
-                                  nonZeroCols = "qusm",
-                                  methods = "doseResponse",
-                                  createReport = "none",
-                                  resultPath = file.path(twofragpipe, "2DTPP-TPPR")
-)
 
 
 
