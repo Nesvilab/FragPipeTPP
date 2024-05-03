@@ -99,9 +99,9 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
 #' @param experimentlables: A vector of stringd to determine what labels are use for different experiment types
 #'
 #' @return Path to the created TPP-R configuration file
-#' @export
+#' @noRd
 #'
-#' @examples tmtitpttpr("C:/FragPipeOutputfolder", c("42_44","46_48","50_52","54_56","58_60","62_64"), c(0,0.005,0.05,0.5,2), c(2mg ATP))
+#' @examples tmtitpttpr_2D("C:/FragPipeOutputfolder", c("42_44","46_48","50_52","54_56","58_60","62_64"), c(0,0.005,0.05,0.5,2), c(2mg ATP))
 tmtitotppr_2D <- function(fragpipefolder, experimentlabels, concentrationlabels, compound_val){
 
   #Variables to find the correct TMTI .tsv file

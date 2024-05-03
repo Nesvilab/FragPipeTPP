@@ -150,6 +150,22 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
 # This code assumes that there is a function called renaming_dict already defined.
 # The renaming_dict function should return a list with two elements: oldcoltonewcol (a named vector or list for renaming columns) and tmt_to_tempdict.
 
+#' twoDConversion: Function to convert protein.tsv filesinto TPPR input for 2DTPP analysis
+#'
+#' @param fragpipefolder: Path to the folder where FragPipe saves results
+#' @param experimentlables: A vector of strings to determine what labels are use for different experiment types
+#' @param concentrationlabels: A vector of strings indicatin the temperatures used in each experiment (plex)
+#' @param compound_val: A string indicating the compounf of interest (e.g. ATP)
+#'
+#' @return configsavepath: Path to the newly created configuration file
+#' @export
+#'
+#' @examples twofragpipe <- "Z:/crojaram/TPP_Project/PXD012423/2DTPP/ATP_rep1/FP20-1_build23"
+#' conc_labels <- c(0,0.005,0.05,0.5,2)
+#' labels_exp <- c("42_44","46_48","50_52","54_56","58_60","62_64")
+#' compound <-("ATP")
+#' configtwo <- twoDConversion(twofragpipe,labels_exp,conc_labels,compound)
+
 twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels, compound_val){
 
 
