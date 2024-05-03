@@ -93,4 +93,6 @@ There are three functions to use:
   
 - **tmtiTotpmap_2D** (FragPipe to TP-MAP conversion of 2DTPP data)
 
+- **TwoDConversion** (FragPipe to TP-MAP conversion of 2DTPP data)
+
 ## For information and to see sample code results use browseVignettes("FragPipeTPP") in the RStudio Console.
