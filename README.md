@@ -1,5 +1,5 @@
 # Thermal Protein Profiling (TPP) Data Analysis with FragPipe: FragPipeTPP
-###### Update: Dec. 13th, 2023
+###### Update: May 3rd, 2024
 
 ## What is TPP?
 TPP is an unbiased method to search for drug targets by monitoring protein stability in the presence and absence of the drug compound of interest. Different samples at different temperatures are prepared and them label with [Tandem Mass Tags (TMT)](https://pubs.acs.org/doi/10.1021/ac0262560). Next, samples are pooled together and analyzed by typical mass spectrometry-based proteomics. In the links below users ar encouraged to review the Nature Protocol method and a recent overview of TPP to understand how the data is analyzed and how protein melting curves are obtained. 
