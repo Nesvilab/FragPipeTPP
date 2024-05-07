@@ -136,7 +136,7 @@ A 2DTPP TP-MAP file will be saved in a "2DTPP" folder inside the resultPath.
                                   createReport = "none",
                                   resultPath = saveoutput)
 
-4. Results from twoDConversion fucntion can be used with the [TPP2D package](https://www.bioconductor.org/packages/release/bioc/vignettes/TPP2D/inst/doc/TPP2D.html), also available in Bioconductor. Use the fucntion as depicted below, excpet for concFactor if the compound of interest is in another concentration range that is no 1e6 mM.
+4. Results from twoDConversion function can be used with the [TPP2D package](https://www.bioconductor.org/packages/release/bioc/vignettes/TPP2D/inst/doc/TPP2D.html), also available in Bioconductor. Use the fucntion as depicted below, excpet for concFactor if the compound of interest is in another concentration range that is no 1e6 mM.
   
   import_df <- TPP2D::import2dDataset(
     configTable = configtwo,
