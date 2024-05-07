@@ -144,6 +144,7 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   #finalDT <- finalDT %>%
    # mutate(across((onethirtyoneindex-4):onethirtyoneindex, ~ . / .data$"sumionarea_131L"))
 
+  print(finalDT)
   return(list(finalDT, tmt_to_tempdict))
 }
 
@@ -212,7 +213,7 @@ twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels
     #look for those labels among the columns of the tsv file
     for (label in experimentlabels) {
 
-      lscolumnstoget <- list("Index", "NumberPSM")
+      lscolumnstoget <- list("Index")
       if (grepl(label, folder)) {
 
         # Splitting the file path using strsplit
@@ -259,7 +260,7 @@ twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels
         #configtempvals <- tpprheaders[2][[1]]
         configtempvals <- convertedfile[2][[1]]
 
-        #For each temperature extract the appropriate TMT lables use for the avialble concentration
+        #For each temperature extract the appropriate TMT lables use for the available concentration
         for (temperature_val in names(configtempvals)){
 
           Temperature <- append(Temperature, temperature_val)
@@ -283,8 +284,8 @@ twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels
 
         }
 
-        print(convertedfile[1])
-        print(class(convertedfile[1]))
+        #print(convertedfile[1])
+        #print(class(convertedfile[1]))
 
         # Save data frame as a tab-delimited text file
         #write.table(newdataframe, file = Outputname, sep = "\t", row.names = FALSE, quote = FALSE) - use base R (slower)
@@ -304,6 +305,7 @@ twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels
 
   return(configsavepath)
 }
+
 
 
 
