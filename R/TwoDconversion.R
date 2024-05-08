@@ -15,7 +15,7 @@ tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperature
     }
   }
   # Initiate a list to rename column headers
-  output_renaming_dict <- list('Protein ID' = 'Prot_ID', "Unique Peptides" = "qupm",
+  output_renaming_dict <- list('Protein ID' = 'Prot_ID', "Gene" = "clustername", "Unique Peptides" = "qupm",
                                'Unique Spectral Count' = "qusm")
 
   # Dictionary to translate TMT labels to TPP-R labels
@@ -110,17 +110,18 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   # Copy original dataframe to prevent changes to the main DT
   outputDT <- DT
 
-  # What columns to extract from the tmt-report abundance file. After "Indistinguishable Proteins" there are the
+  # What columns to extract from protein.tsv. After "Indistinguishable Proteins" there are the
   # columns with abundance info
   thecolumns <- colnames(outputDT)
   referenceindex <- match("Indistinguishable Proteins", thecolumns)
-  protidndex <- match("Protein ID", thecolumns)
+  protindex <- match("Protein ID", thecolumns)
+  geneindex <- match("Gene", thecolumns)
   uniquepepindex <- match("Unique Peptides", thecolumns)
   uniquespectralindex <- match("Unique Spectral Count", thecolumns)
   outputcolumns <- thecolumns[(referenceindex + 1):length(thecolumns)]
 
   # Add as first column the one that contains the protein ID (the second column in the protein.tsv file), then the unique peptides per protein
-  outputcolumns <- c(thecolumns[protidndex], thecolumns[uniquepepindex], thecolumns[uniquespectralindex], outputcolumns)
+  outputcolumns <- c(thecolumns[protindex], thecolumns[geneindex], thecolumns[uniquepepindex], thecolumns[uniquespectralindex], outputcolumns)
 
   # Data frame with desired columns
   finalDT <- select(outputDT, all_of(outputcolumns))
@@ -130,19 +131,20 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
 
   #128H and 131L are used as ref columns
   newcolumns <- colnames(finalDT)
-  #onetwoeightindex <- match("sumionarea_128H", newcolumns)
-  #onethirtyoneindex <- match("sumionarea_131L", newcolumns)
 
+  #TPP2D compatability
 
-  #128H normalization
-  #Using a regular dataframe: finalDT[, (onetwoeightindex-4):onetwoeightindex] <- finalDT[, (onetwoeightindex-4):onetwoeightindex] / finalDT[,onetwoeightindex]
-  #finalDT <- finalDT %>%
-   # mutate(across((onetwoeightindex-4):onetwoeightindex, ~ . / .data$"sumionarea_128H"))
+  finalDT <- finalDT %>% tibble::add_column(ref_fc_126 = finalDT$sumionarea_126/finalDT$sumionarea_128H, .before = "sumionarea_126")
+  finalDT <- finalDT %>% tibble::add_column(ref_fc_127L = finalDT$sumionarea_127L/finalDT$sumionarea_128H, .before = "sumionarea_126")
+  finalDT <- finalDT %>% tibble::add_column(ref_fc_127H = finalDT$sumionarea_127H/finalDT$sumionarea_128H, .before = "sumionarea_126")
+  finalDT <- finalDT %>% tibble::add_column(ref_fc_128L = finalDT$sumionarea_128L/finalDT$sumionarea_128H, .before = "sumionarea_126")
+  finalDT <- finalDT %>% tibble::add_column(ref_fc_128H = finalDT$sumionarea_128H/finalDT$sumionarea_128H, .before = "sumionarea_126")
+  finalDT <- finalDT %>% tibble::add_column(ref_fc_129L = finalDT$sumionarea_129L/finalDT$sumionarea_131L, .before = "sumionarea_126")
+  finalDT <- finalDT %>% tibble::add_column(ref_fc_129H = finalDT$sumionarea_129H/finalDT$sumionarea_131L, .before = "sumionarea_126")
+  finalDT <- finalDT %>% tibble::add_column(ref_fc_130L = finalDT$sumionarea_130L/finalDT$sumionarea_131L, .before = "sumionarea_126")
+  finalDT <- finalDT %>% tibble::add_column(ref_fc_130H = finalDT$sumionarea_130H/finalDT$sumionarea_131L, .before = "sumionarea_126")
+  finalDT <- finalDT %>% tibble::add_column(ref_fc_131L = finalDT$sumionarea_131L/finalDT$sumionarea_131L, .before = "sumionarea_126")
 
-  #131L normalization
-  #finalDT[, (onethirtyoneindex-4):onethirtyoneindex] <- finalDT[, (onethirtyoneindex-4):onethirtyoneindex] / finalDT[,onethirtyoneindex]
-  #finalDT <- finalDT %>%
-   # mutate(across((onethirtyoneindex-4):onethirtyoneindex, ~ . / .data$"sumionarea_131L"))
 
   print(finalDT)
   return(list(finalDT, tmt_to_tempdict))
@@ -305,9 +307,5 @@ twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels
 
   return(configsavepath)
 }
-
-
-
-
 
 
