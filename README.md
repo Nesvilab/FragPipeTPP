@@ -44,20 +44,7 @@ If successful a message will appeared saying: "The downloaded binary packages ar
 ### 2. Install TPP and FragPipeTPP packages
 
 #### renv::install("bioc::TPP")
-#### renv::install("bioc::TPP2D")
-
-Below is a successful FragPipeTPP package installation:
-
-The following package(s) will be installed:
-- TPP [3.28.0]
-These packages will be installed into "C:/Users/caror/AppData/Local/R/win-library/4.3".
-
-Do you want to proceed? [Y/n]: Y
-
-##### Installing packages --------------------------------------------------------
-- Installing TPP ...                            OK [copied from cache in 0.37s]
-Successfully installed 1 package in 0.39 seconds.
-
+#### renv::install("bioc::TPP2D") - (for 2DTPP analysis only, and not required by FragPipeTPP-1DTPP analysis)
 #### renv::install("Nesvilab/FragPipeTPP")
 
 Below is a successful FragPipeTPP package installation:
