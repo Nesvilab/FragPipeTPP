@@ -1,6 +1,3 @@
-library(readr)
-library(magrittr)
-library(dplyr)
 library(tidyr)
 library(TPP2D)
 
@@ -104,8 +101,8 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   protsv_path <-  file.path(expfolder, protfile)
   print("protsv_path")
   print(protsv_path)
-  #This creates a tibble, incompatible with the normalization downstream, bult makes it easier to do other stuff
-  DT <- readr::read_tsv(protsv_path)
+  #Data frame
+  DT <- read.delim(protsv_path)
 
 
   # Copy original dataframe to prevent changes to the main DT
@@ -114,15 +111,20 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   # What columns to extract from protein.tsv. After "Indistinguishable Proteins" there are the
   # columns with abundance info
   thecolumns <- colnames(outputDT)
-  referenceindex <- match("Indistinguishable Proteins", thecolumns)
-  protindex <- match("Protein ID", thecolumns)
+  #print(thecolumns)
+  referenceindex <- match("Indistinguishable.Proteins", thecolumns)
+  #print(referenceindex)
+  protindex <- match("Protein.ID", thecolumns)
   geneindex <- match("Gene", thecolumns)
-  uniquepepindex <- match("Unique Peptides", thecolumns)
-  uniquespectralindex <- match("Unique Spectral Count", thecolumns)
+  uniquepepindex <- match("Unique.Peptides", thecolumns)
+  uniquespectralindex <- match("Unique.Spectral.Count", thecolumns)
   outputcolumns <- thecolumns[(referenceindex + 1):length(thecolumns)]
 
   # Add as first column the one that contains the protein ID (the second column in the protein.tsv file), then the unique peptides per protein
   outputcolumns <- c(thecolumns[protindex], thecolumns[geneindex], thecolumns[uniquepepindex], thecolumns[uniquespectralindex], outputcolumns)
+
+  #print(outputcolumns)
+  #print(outputDT)
 
   # Data frame with desired columns
   #finalDT <- dplyr::select(outputDT, all_of(outputcolumns))
@@ -130,12 +132,17 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
 
 
   # Rename to TPP-R compatible columns
-  names(finalDT) <- oldcoltonewcol[names(finalDT)]
+  names(finalDT) <- oldcoltonewcol
+
+  #print(finalDT)
+  #print(oldcoltonewcol)
 
   #128H and 131L are used as ref columns
   newcolumns <- colnames(finalDT)
 
   #TPP2D compatability
+
+  #print(finalDT)
 
 
   finalDT["ref_fc_126"] <- finalDT["sumionarea_126"]/finalDT["sumionarea_128H"]
@@ -149,7 +156,7 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   finalDT["ref_fc_130H"] <- finalDT["sumionarea_130H"]/finalDT["sumionarea_131L"]
   finalDT["ref_fc_131L"] <- finalDT["sumionarea_131L"]/finalDT["sumionarea_131L"]
 
-  print(finalDT)
+  #print(finalDT)
 
 
   return(list(finalDT, tmt_to_tempdict))
