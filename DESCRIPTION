@@ -18,7 +18,8 @@ Imports:
     xlsx,
     tidyft,
     readr,
-    tibble
+    tibble,
+    magrittr
 Depends: 
     R (>= 2.10)
 LazyData: true
