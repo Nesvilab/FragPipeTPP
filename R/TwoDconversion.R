@@ -124,7 +124,7 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   outputcolumns <- c(thecolumns[protindex], thecolumns[geneindex], thecolumns[uniquepepindex], thecolumns[uniquespectralindex], outputcolumns)
 
   # Data frame with desired columns
-  finalDT <- select(outputDT, all_of(outputcolumns))
+  finalDT <- dplyr::select(outputDT, all_of(outputcolumns))
 
   # Rename to TPP-R compatible columns
   names(finalDT) <- oldcoltonewcol[names(finalDT)]
