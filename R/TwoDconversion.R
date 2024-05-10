@@ -139,23 +139,17 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   #finalDT <- dplyr::select(outputDT, all_of(outputcolumns))
   finalDT <- outputDT[, unlist(outputcolumns)]
 
-  print(head(finalDT, 5))
-
   # Rename to TPP-R compatible columns
-  print(oldcoltonewcol)
+  #print(oldcoltonewcol)
   names(finalDT) <- oldcoltonewcol
 
   #print(finalDT)
   #print(oldcoltonewcol)
-  print(head(finalDT, 5))
 
   #128H and 131L are used as ref columns
   newcolumns <- colnames(finalDT)
 
   #TPP2D compatability
-
-  print(head(finalDT, 5))
-
 
   finalDT["ref_fc_126"] <- finalDT["sumionarea_126"]/finalDT["sumionarea_128H"]
   finalDT["ref_fc_127L"] <- finalDT["sumionarea_127L"]/finalDT["sumionarea_128H"]
