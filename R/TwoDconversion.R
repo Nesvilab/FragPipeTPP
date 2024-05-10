@@ -135,6 +135,8 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
 
   #TPP2D compatability
 
+  print(finalDT)
+
 
   finalDT["ref_fc_126"] <- finalDT["sumionarea_126"]/finalDT["sumionarea_128H"]
   finalDT["ref_fc_127L"] <- finalDT["sumionarea_127L"]/finalDT["sumionarea_128H"]
@@ -159,7 +161,7 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   #finalDT <- finalDT %>% tibble::add_column(ref_fc_131L = finalDT$sumionarea_131L/finalDT$sumionarea_131L, .before = "sumionarea_126")
 
 
-  print(finalDT)
+
   return(list(finalDT, tmt_to_tempdict))
 }
 
