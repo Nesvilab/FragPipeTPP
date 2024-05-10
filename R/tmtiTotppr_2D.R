@@ -6,7 +6,7 @@
 #' @return a list of a dictionary of old and new labels, as well as a list of temperatures with lists of TMT anc Concentration conversion
 #' @noRd
 #'
-#' @examples tmtiheader_to_tpprheaders("C:/FragPipeOutputfolder")
+#' @examples tmtiheader_to_tpprheaders2D("C:/FragPipeOutputfolder", c("42_44","46_48","50_52","54_56","58_60","62_64"))
 tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperatures){
 
   #Find annotation file: Connection between temperature/concentration and TMT label
