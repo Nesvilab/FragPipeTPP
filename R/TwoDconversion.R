@@ -135,16 +135,28 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
 
   #TPP2D compatability
 
-  finalDT <- finalDT %>% tibble::add_column(ref_fc_126 = finalDT$sumionarea_126/finalDT$sumionarea_128H, .before = "sumionarea_126")
-  finalDT <- finalDT %>% tibble::add_column(ref_fc_127L = finalDT$sumionarea_127L/finalDT$sumionarea_128H, .before = "sumionarea_126")
-  finalDT <- finalDT %>% tibble::add_column(ref_fc_127H = finalDT$sumionarea_127H/finalDT$sumionarea_128H, .before = "sumionarea_126")
-  finalDT <- finalDT %>% tibble::add_column(ref_fc_128L = finalDT$sumionarea_128L/finalDT$sumionarea_128H, .before = "sumionarea_126")
-  finalDT <- finalDT %>% tibble::add_column(ref_fc_128H = finalDT$sumionarea_128H/finalDT$sumionarea_128H, .before = "sumionarea_126")
-  finalDT <- finalDT %>% tibble::add_column(ref_fc_129L = finalDT$sumionarea_129L/finalDT$sumionarea_131L, .before = "sumionarea_126")
-  finalDT <- finalDT %>% tibble::add_column(ref_fc_129H = finalDT$sumionarea_129H/finalDT$sumionarea_131L, .before = "sumionarea_126")
-  finalDT <- finalDT %>% tibble::add_column(ref_fc_130L = finalDT$sumionarea_130L/finalDT$sumionarea_131L, .before = "sumionarea_126")
-  finalDT <- finalDT %>% tibble::add_column(ref_fc_130H = finalDT$sumionarea_130H/finalDT$sumionarea_131L, .before = "sumionarea_126")
-  finalDT <- finalDT %>% tibble::add_column(ref_fc_131L = finalDT$sumionarea_131L/finalDT$sumionarea_131L, .before = "sumionarea_126")
+
+  finalDT["ref_fc_126"] <- finalDT["sumionarea_126"]/finalDT["sumionarea_128H"]
+  finalDT["ref_fc_127L"] <- finalDT["sumionarea_127L"]/finalDT["sumionarea_128H"]
+  finalDT["ref_fc_127H"] <- finalDT["sumionarea_127H"]/finalDT["sumionarea_128H"]
+  finalDT["ref_fc_128L"] <- finalDT["sumionarea_128L"]/finalDT["sumionarea_128H"]
+  finalDT["ref_fc_128H"] <- finalDT["sumionarea_128H"]/finalDT["sumionarea_128H"]
+  finalDT["ref_fc_129L"] <- finalDT["sumionarea_129L"]/finalDT["sumionarea_131L"]
+  finalDT["ref_fc_129H"] <- finalDT["sumionarea_129H"]/finalDT["sumionarea_131L"]
+  finalDT["ref_fc_130L"] <- finalDT["sumionarea_130L"]/finalDT["sumionarea_131L"]
+  finalDT["ref_fc_130H"] <- finalDT["sumionarea_130H"]/finalDT["sumionarea_131L"]
+  finalDT["ref_fc_131L"] <- finalDT["sumionarea_131L"]/finalDT["sumionarea_131L"]
+
+
+   #finalDT <- finalDT %>% tibble::add_column(ref_fc_127L = finalDT$sumionarea_127L/finalDT$sumionarea_128H, .before = "sumionarea_126")
+  #finalDT <- finalDT %>% tibble::add_column(ref_fc_127H = finalDT$sumionarea_127H/finalDT$sumionarea_128H, .before = "sumionarea_126")
+  #finalDT <- finalDT %>% tibble::add_column(ref_fc_128L = finalDT$sumionarea_128L/finalDT$sumionarea_128H, .before = "sumionarea_126")
+  #finalDT <- finalDT %>% tibble::add_column(ref_fc_128H = finalDT$sumionarea_128H/finalDT$sumionarea_128H, .before = "sumionarea_126")
+  #finalDT <- finalDT %>% tibble::add_column(ref_fc_129L = finalDT$sumionarea_129L/finalDT$sumionarea_131L, .before = "sumionarea_126")
+  #finalDT <- finalDT %>% tibble::add_column(ref_fc_129H = finalDT$sumionarea_129H/finalDT$sumionarea_131L, .before = "sumionarea_126")
+  #finalDT <- finalDT %>% tibble::add_column(ref_fc_130L = finalDT$sumionarea_130L/finalDT$sumionarea_131L, .before = "sumionarea_126")
+  #finalDT <- finalDT %>% tibble::add_column(ref_fc_130H = finalDT$sumionarea_130H/finalDT$sumionarea_131L, .before = "sumionarea_126")
+  #finalDT <- finalDT %>% tibble::add_column(ref_fc_131L = finalDT$sumionarea_131L/finalDT$sumionarea_131L, .before = "sumionarea_126")
 
 
   print(finalDT)
