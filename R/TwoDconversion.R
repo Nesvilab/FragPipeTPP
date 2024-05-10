@@ -125,7 +125,9 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   outputcolumns <- c(thecolumns[protindex], thecolumns[geneindex], thecolumns[uniquepepindex], thecolumns[uniquespectralindex], outputcolumns)
 
   # Data frame with desired columns
-  finalDT <- dplyr::select(outputDT, all_of(outputcolumns))
+  #finalDT <- dplyr::select(outputDT, all_of(outputcolumns))
+  finalDT <- outputDT[, unlist(outputcolumns)]
+
 
   # Rename to TPP-R compatible columns
   names(finalDT) <- oldcoltonewcol[names(finalDT)]
@@ -148,18 +150,6 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   finalDT["ref_fc_130L"] <- finalDT["sumionarea_130L"]/finalDT["sumionarea_131L"]
   finalDT["ref_fc_130H"] <- finalDT["sumionarea_130H"]/finalDT["sumionarea_131L"]
   finalDT["ref_fc_131L"] <- finalDT["sumionarea_131L"]/finalDT["sumionarea_131L"]
-
-
-   #finalDT <- finalDT %>% tibble::add_column(ref_fc_127L = finalDT$sumionarea_127L/finalDT$sumionarea_128H, .before = "sumionarea_126")
-  #finalDT <- finalDT %>% tibble::add_column(ref_fc_127H = finalDT$sumionarea_127H/finalDT$sumionarea_128H, .before = "sumionarea_126")
-  #finalDT <- finalDT %>% tibble::add_column(ref_fc_128L = finalDT$sumionarea_128L/finalDT$sumionarea_128H, .before = "sumionarea_126")
-  #finalDT <- finalDT %>% tibble::add_column(ref_fc_128H = finalDT$sumionarea_128H/finalDT$sumionarea_128H, .before = "sumionarea_126")
-  #finalDT <- finalDT %>% tibble::add_column(ref_fc_129L = finalDT$sumionarea_129L/finalDT$sumionarea_131L, .before = "sumionarea_126")
-  #finalDT <- finalDT %>% tibble::add_column(ref_fc_129H = finalDT$sumionarea_129H/finalDT$sumionarea_131L, .before = "sumionarea_126")
-  #finalDT <- finalDT %>% tibble::add_column(ref_fc_130L = finalDT$sumionarea_130L/finalDT$sumionarea_131L, .before = "sumionarea_126")
-  #finalDT <- finalDT %>% tibble::add_column(ref_fc_130H = finalDT$sumionarea_130H/finalDT$sumionarea_131L, .before = "sumionarea_126")
-  #finalDT <- finalDT %>% tibble::add_column(ref_fc_131L = finalDT$sumionarea_131L/finalDT$sumionarea_131L, .before = "sumionarea_126")
-
 
 
   return(list(finalDT, tmt_to_tempdict))
@@ -324,3 +314,8 @@ twoDConversion <- function(fragpipefolder, experimentlabels, concentrationlabels
 }
 
 
+twofragpipe <- "Z:/crojaram/TPP_Project/PXD012423/2DTPP/ATP_rep1/2024LinuxRun"
+conc_labels <- c(0,0.005,0.05,0.5,2)
+labels_exp <- c("42_44","46_48","50_52","54_56","58_60","62_64")
+compound <-("ATP")
+configtwo <- FragPipetwoDConversion(twofragpipe,labels_exp,conc_labels,compound)
