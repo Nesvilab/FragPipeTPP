@@ -142,7 +142,7 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
 
   #TPP2D compatability
 
-  #print(finalDT)
+  print(finalDT)
 
 
   finalDT["ref_fc_126"] <- finalDT["sumionarea_126"]/finalDT["sumionarea_128H"]
