@@ -136,13 +136,14 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
 
   #print(finalDT)
   #print(oldcoltonewcol)
+  print(head(finalDT, 5))
 
   #128H and 131L are used as ref columns
   newcolumns <- colnames(finalDT)
 
   #TPP2D compatability
 
-  print(finalDT)
+  print(head(finalDT, 5))
 
 
   finalDT["ref_fc_126"] <- finalDT["sumionarea_126"]/finalDT["sumionarea_128H"]
