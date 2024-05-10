@@ -123,13 +123,14 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   # Add as first column the one that contains the protein ID (the second column in the protein.tsv file), then the unique peptides per protein
   outputcolumns <- c(thecolumns[protindex], thecolumns[geneindex], thecolumns[uniquepepindex], thecolumns[uniquespectralindex], outputcolumns)
 
-  #print(outputcolumns)
+  print(outputcolumns)
   #print(outputDT)
 
   # Data frame with desired columns
   #finalDT <- dplyr::select(outputDT, all_of(outputcolumns))
   finalDT <- outputDT[, unlist(outputcolumns)]
 
+  print(head(finalDT, 5))
 
   # Rename to TPP-R compatible columns
   names(finalDT) <- oldcoltonewcol
