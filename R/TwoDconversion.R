@@ -133,6 +133,7 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   print(head(finalDT, 5))
 
   # Rename to TPP-R compatible columns
+  print(oldcoltonewcol)
   names(finalDT) <- oldcoltonewcol
 
   #print(finalDT)
