@@ -1,7 +1,16 @@
 library(tidyr)
 library(TPP2D)
 
-tmtiheader_to_tpprheaders2D <- function(directory_of_interest, configtemperatures){
+#' Translate protein.tsv headers to TPPR headers for 2DTPP data
+#'
+#' @param directory_of_interest: fragPipe directory
+#' @param configtemperatures: A list fo temperatures
+#'
+#' @return a list of a dictionary of old and new labels, as well as a list of temperatures with lists of TMT anc Concentration conversion
+#' @noRd
+#'
+#' @examples protein_to_tpprheaders2D("C:/FragPipeOutputfolder", c("42_44","46_48","50_52","54_56","58_60","62_64"))
+protein_to_tpprheaders2D <- function(directory_of_interest, configtemperatures){
 
   #Find annotation file: Connection between temperature/concentration and TMT label
   annotationfile <- ""
@@ -92,7 +101,7 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   # Function to transform protein.tsv to TPPR input .txt file
 
   # How to rename column names, assuming renaming_dict is a custom function yet to be defined
-  list_oldcoltonewcol_tmt_to_tempdict <- tmtiheader_to_tpprheaders2D(expfolder, configtemperatures)
+  list_oldcoltonewcol_tmt_to_tempdict <- protein_to_tpprheaders2D(expfolder, configtemperatures)
   oldcoltonewcol <- list_oldcoltonewcol_tmt_to_tempdict[[1]]
   tmt_to_tempdict <- list_oldcoltonewcol_tmt_to_tempdict[[2]]
 
