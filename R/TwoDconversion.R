@@ -104,7 +104,7 @@ fragpipe_to_TPPR <- function(expfolder, configtemperatures) {
   print("protsv_path")
   print(protsv_path)
   #This creates a tibble, incompatible with the normalization downstream, bult makes it easier to do other stuff
-  DT <- read_tsv(protsv_path)
+  DT <- readr::read_tsv(protsv_path)
 
 
   # Copy original dataframe to prevent changes to the main DT
