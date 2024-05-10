@@ -44,6 +44,7 @@ If successful a message will appeared saying: "The downloaded binary packages ar
 ### 2. Install TPP and FragPipeTPP packages
 
 #### renv::install("bioc::TPP")
+#### renv::install("bioc::TPP2D")
 
 Below is a successful FragPipeTPP package installation:
 
